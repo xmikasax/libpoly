@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15.3)
+cmake_minimum_required(VERSION 3.12.4)
 
 project(
     LibPoly
@@ -15,5 +15,5 @@ target_compile_options(poly
     PUBLIC -Wall -Wextra -Werror)
 
 add_executable(test tests/main.cpp tests/tests.cpp)
-target_include_directories(test PRIVATE tests/tests.hpp)
+target_include_directories(test PRIVATE tests/)
 target_link_libraries(test PRIVATE poly)
