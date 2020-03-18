@@ -3,6 +3,7 @@
 #include "monomial.hpp"
 
 #include <iostream>
+#include <cassert>
 
 void TestAll() {
     TestMonomial();
