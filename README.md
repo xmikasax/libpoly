@@ -1,0 +1,2 @@
+# libpoly
+Polynomials library
