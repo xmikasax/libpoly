@@ -8,9 +8,9 @@ project(
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-file(GLOB SOURCES src/*)
+file(GLOB SOURCES src/*.cpp)
 add_library(poly SHARED ${SOURCES})
-target_include_directories(poly PUBLIC include)
+target_include_directories(poly PUBLIC include src)
 target_compile_options(poly
     PUBLIC -Wall -Wextra -Werror)
 
