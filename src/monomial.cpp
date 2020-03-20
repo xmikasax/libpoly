@@ -6,16 +6,18 @@ namespace NLibPoly {
 TMonomial::TMonomial()
     : Degree(0) {}
 
-TMonomial::TMonomial(TIndex index, TDegree degree) {
-    Variables[index] = degree;
-    Degree = degree;
+TMonomial::TMonomial(TIndex index, TDegree degree)
+    : TMonomial()
+{
+    Set(index, degree);
 }
 
-TMonomial::TMonomial(const std::initializer_list<TDegree> &init_list) {
+TMonomial::TMonomial(const std::initializer_list<TDegree> &init_list)
+    : TMonomial()
+{
     TIndex index(0);
     for (const auto &it : init_list) {
-        Variables[index] += it;
-        Degree += it;
+        Set(index, it);
         ++index;
     }
 }
@@ -30,7 +32,7 @@ TMonomial::TDegree TMonomial::operator[](TIndex index) {
     return Variables[index];
 }
 
-TMonomial::TDegree TMonomial::At(TIndex index) {
+const TMonomial::TDegree &TMonomial::At(TIndex index) {
     return Variables.at(index);
 }
 

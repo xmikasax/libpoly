@@ -2,6 +2,7 @@
 #define INCLUDE_TESTS_HPP
 
 void TestMonomial();
+void TestTerm();
 void TestAll();
 
 #endif // INCLUDE_TESTS_HPP
