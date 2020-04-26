@@ -21,13 +21,13 @@ public:
     TMonomial(TIndex index, TDegree degree);
     TMonomial(const std::initializer_list<TDegree> &init_list);
 
-    virtual void Set(TIndex index, TDegree degree);
+    void Set(TIndex index, TDegree degree);
 
-    virtual TDegree operator[](TIndex index);
-    virtual const TDegree &At(TIndex index);
-    virtual const TDegree &At(TIndex index) const;
+    TDegree operator[](TIndex index);
+    const TDegree &At(TIndex index);
+    const TDegree &At(TIndex index) const;
 
-    virtual const TDegree &GetDegree() const;
+    const TDegree &GetDegree() const;
 
     TMonomial &operator*=(const TMonomial &other);
     TMonomial operator*(const TMonomial &other) const;
