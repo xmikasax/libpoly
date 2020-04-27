@@ -9,21 +9,16 @@ namespace NLibPoly {
 class TMonomial {
 public:
     using TIndex = size_t;
-    using TDegree = int32_t;
+    using TDegree = size_t;
 
 public:
-    TMonomial();
+    TMonomial() = default;
     TMonomial(const TMonomial &other) = default;
     TMonomial(TIndex index, TDegree degree);
     TMonomial(const std::initializer_list<TDegree> &init_list);
 
-    void Set(TIndex index, TDegree degree);
-
-    TDegree operator[](TIndex index);
-    const TDegree &At(TIndex index);
-    const TDegree &At(TIndex index) const;
-
-    const TDegree &GetDegree() const;
+    TDegree GetDegree(TIndex index) const;
+    void SetDegree(TIndex index, TDegree degree);
 
     TMonomial &operator*=(const TMonomial &other);
     TMonomial operator*(const TMonomial &other) const;
@@ -33,7 +28,6 @@ public:
     friend TMonomial Lcm(const TMonomial &a, const TMonomial &b);
 
 private:
-    TDegree Degree;
     std::map<TIndex, TDegree> Variables;
 };
 
