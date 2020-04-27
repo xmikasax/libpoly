@@ -3,6 +3,8 @@
 
 #include "monomial.hpp"
 
+#include <utility>
+
 namespace NLibPoly {
 
 template <typename TCoefficientType>
@@ -11,7 +13,7 @@ public:
     TTerm();
     TTerm(const TTerm<TCoefficientType> &other) = default;
     TTerm(TCoefficientType coeff, TMonomial monomial);
-    TTerm(const std::initializer_list<TDegree> &init_list);
+    TTerm(const std::initializer_list<std::pair<TIndex, TDegree>> &init_list);
 
     TCoefficientType GetCoefficient() const;
     void SetCoefficient(TCoefficientType new_coeff);

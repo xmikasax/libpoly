@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <map>
+#include <utility>
 
 namespace NLibPoly {
 
@@ -14,7 +15,7 @@ public:
 public:
     TMonomial() = default;
     TMonomial(TIndex index, TDegree degree);
-    TMonomial(const std::initializer_list<TDegree> &init_list);
+    TMonomial(const std::initializer_list<std::pair<TIndex, TDegree>> &init_list);
 
     TDegree GetDegree(TIndex index) const;
     void SetDegree(TIndex index, TDegree degree);

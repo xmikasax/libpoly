@@ -1,5 +1,7 @@
 #include "monomial.hpp"
 
+#include <utility>
+
 #include "utils.hpp"
 
 namespace NLibPoly {
@@ -8,11 +10,9 @@ TMonomial::TMonomial(TIndex index, TDegree degree) {
     SetDegree(index, degree);
 }
 
-TMonomial::TMonomial(const std::initializer_list<TDegree> &init_list) {
-    TIndex index(0);
+TMonomial::TMonomial(const std::initializer_list<std::pair<TIndex, TDegree>> &init_list) {
     for (const auto &it : init_list) {
-        SetDegree(index, it);
-        ++index;
+        SetDegree(it.first, it.second);
     }
 }
 

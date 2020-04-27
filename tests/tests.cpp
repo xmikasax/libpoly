@@ -18,7 +18,7 @@ void TestMonomial() {
     a.SetDegree(2, 2);
     assert(a.GetDegree(2) == 2);
 
-    NLibPoly::TMonomial b{0, 0, 1};
+    NLibPoly::TMonomial b{{2, 1}};
     NLibPoly::TMonomial c = a / b;
     assert(c.GetDegree(0) == 0);
     assert(c.GetDegree(2) == 1);
@@ -48,7 +48,7 @@ void TestTerm() {
     assert(a.GetDegree(2) == 1);
     assert(a.GetCoefficient() == 2);
 
-    NLibPoly::TTerm<size_t> b{0, 0, 1};
+    NLibPoly::TTerm<size_t> b{{2, 1}};
     NLibPoly::TTerm<size_t> c = a / b;
     assert(c.GetCoefficient() == 2);
     assert(c.GetDegree(2) == 0);

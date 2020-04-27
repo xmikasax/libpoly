@@ -1,5 +1,7 @@
 #include "term.hpp"
 
+#include <utility>
+
 namespace NLibPoly {
 
 template <typename TCoefficientType>
@@ -11,7 +13,9 @@ TTerm<TCoefficientType>::TTerm(TCoefficientType coeff, TMonomial monomial)
     : TMonomial(monomial), Coefficient(coeff) {}
 
 template<typename TCoefficientType>
-TTerm<TCoefficientType>::TTerm(const std::initializer_list<TDegree> &init_list)
+TTerm<TCoefficientType>::TTerm(
+    const std::initializer_list<std::pair<TIndex, TDegree>> &init_list
+)
     : TMonomial(init_list), Coefficient(1) {}
 
 template <typename TCoefficientType>
