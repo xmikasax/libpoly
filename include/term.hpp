@@ -17,10 +17,10 @@ public:
     TCoefficientType GetCoefficient() const;
     void SetCoefficient(TCoefficientType new_coeff);
 
-    TTerm<TCoefficientType> &operator*=(const TTerm<TCoefficientType> &other);
-    TTerm<TCoefficientType> operator*(const TTerm<TCoefficientType> &other) const;
-    TTerm<TCoefficientType> &operator/=(const TTerm<TCoefficientType> &other);
-    TTerm<TCoefficientType> operator/(const TTerm<TCoefficientType> &other) const;
+    TTerm &operator*=(const TTerm &other);
+    TTerm operator*(const TTerm &other) const;
+    TTerm &operator/=(const TTerm &other);
+    TTerm operator/(const TTerm &other) const;
 
     template<typename T>
     friend TTerm<T> Lcm(
