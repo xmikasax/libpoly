@@ -1,10 +1,11 @@
 #include "tests.hpp"
 
-#include "monomial.hpp"
-#include "term.hpp"
-
 #include <iostream>
 #include <cassert>
+
+#include "monomial.hpp"
+#include "term.hpp"
+#include "utils.hpp"
 
 void TestAll() {
     TestMonomial();
@@ -30,6 +31,11 @@ void TestMonomial() {
 
     assert(e.GetDegree(2) == 3);
     assert(e.GetDegree(3) == 1);
+
+    try {
+        NLibPoly::TMonomial bad = b / a;
+        assert(false);
+    } catch (NLibPoly::NUtils::TLibPolyException& e) {}
 
     std::cerr << "Monomial tests OK!" << std::endl;
 }

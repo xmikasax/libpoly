@@ -1,5 +1,6 @@
 #include "monomial.hpp"
-#include <iostream>
+
+#include "utils.hpp"
 
 namespace NLibPoly {
 
@@ -18,15 +19,20 @@ TMonomial::TMonomial(const std::initializer_list<TDegree> &init_list) {
 TMonomial::TDegree TMonomial::GetDegree(TIndex index) const {
     const auto &it = Variables.find(index);
     if (it == Variables.end()) {
-        return 0;
+        return TDegree(0);
     }
     return it->second;
 }
 
 void TMonomial::SetDegree(TIndex index, TDegree degree) {
-    Variables[index] = degree;
+    if (degree == TDegree(0)) {
+        Variables.erase(index);
+    } else {
+        Variables[index] = degree;
+    }
 }
 
+// No need to check for zero degree
 TMonomial &TMonomial::operator*=(const TMonomial &other) {
     for (auto it : other.Variables) {
         Variables[it.first] += it.second;
@@ -41,7 +47,11 @@ TMonomial operator*(const TMonomial &m1, const TMonomial &m2) {
 
 TMonomial &TMonomial::operator/=(const TMonomial &other) {
     for (auto it : other.Variables) {
-        Variables[it.first] -= it.second;
+        TDegree degree = GetDegree(it.first);
+        if (degree < it.second) {
+            NUtils::Halt("Underflow while dividing monomials");
+        }
+        SetDegree(it.first, degree - it.second);
     }
     return *this;
 }
