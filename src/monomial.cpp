@@ -34,7 +34,7 @@ void TMonomial::SetDegree(TIndex index, TDegree degree) {
 
 // No need to check for zero degree
 TMonomial &TMonomial::operator*=(const TMonomial &other) {
-    for (auto it : other.Variables) {
+    for (const auto &it : other.Variables) {
         Variables[it.first] += it.second;
     }
     return *this;
@@ -46,7 +46,7 @@ TMonomial operator*(const TMonomial &m1, const TMonomial &m2) {
 }
 
 TMonomial &TMonomial::operator/=(const TMonomial &other) {
-    for (auto it : other.Variables) {
+    for (const auto &it : other.Variables) {
         TDegree degree = GetDegree(it.first);
         if (degree < it.second) {
             NUtils::Halt("Underflow while dividing monomials");
@@ -63,7 +63,7 @@ TMonomial operator/(const TMonomial &m1, const TMonomial &m2) {
 
 TMonomial Lcm(const TMonomial &a, const TMonomial &b) {
     TMonomial res(a);
-    for (auto it : b.Variables) {
+    for (const auto &it : b.Variables) {
         res.SetDegree(it.first, std::max(
             res.GetDegree(it.first),
             it.second
