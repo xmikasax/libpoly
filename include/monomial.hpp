@@ -13,7 +13,6 @@ public:
 
 public:
     TMonomial() = default;
-    TMonomial(const TMonomial &other) = default;
     TMonomial(TIndex index, TDegree degree);
     TMonomial(const std::initializer_list<TDegree> &init_list);
 
