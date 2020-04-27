@@ -25,6 +25,9 @@ public:
     TMonomial &operator/=(const TMonomial &other);
     friend TMonomial operator/(const TMonomial &m1, const TMonomial &m2);
 
+    friend bool operator==(const TMonomial &m1, const TMonomial &m2);
+    friend bool operator!=(const TMonomial &m1, const TMonomial &m2);
+
     friend TMonomial Lcm(const TMonomial &a, const TMonomial &b);
 
 private:
@@ -34,6 +37,8 @@ private:
 TMonomial Lcm(const TMonomial &a, const TMonomial &b);
 TMonomial operator*(const TMonomial &m1, const TMonomial &m2);
 TMonomial operator/(const TMonomial &m1, const TMonomial &m2);
+bool operator==(const TMonomial &m1, const TMonomial &m2);
+bool operator!=(const TMonomial &m1, const TMonomial &m2);
 
 }
 

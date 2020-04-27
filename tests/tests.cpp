@@ -37,6 +37,9 @@ void TestMonomial() {
         assert(false);
     } catch (NLibPoly::NUtils::TLibPolyException& e) {}
 
+    assert(c * c == a);
+    assert(c != a);
+
     std::cerr << "Monomial tests OK!" << std::endl;
 }
 

@@ -61,6 +61,14 @@ TMonomial operator/(const TMonomial &m1, const TMonomial &m2) {
     return res /= m2;
 }
 
+bool operator==(const TMonomial &m1, const TMonomial &m2) {
+    return m1.Variables == m2.Variables;
+}
+
+bool operator!=(const TMonomial &m1, const TMonomial &m2) {
+    return !(m1 == m2);
+}
+
 TMonomial Lcm(const TMonomial &a, const TMonomial &b) {
     TMonomial res(a);
     for (const auto &it : b.Variables) {
