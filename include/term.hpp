@@ -10,8 +10,7 @@ namespace NLibPoly {
 template <typename TCoefficientType>
 class TTerm : public TMonomial {
 public:
-    TTerm();
-    TTerm(const TTerm<TCoefficientType> &other) = default;
+    TTerm() = default;
     TTerm(TCoefficientType coeff, TMonomial monomial);
     TTerm(const std::initializer_list<std::pair<TIndex, TDegree>> &init_list);
 
@@ -29,7 +28,7 @@ public:
         const TTerm<T> &b);
 
 private:
-    TCoefficientType Coefficient;
+    TCoefficientType Coefficient = TCoefficientType(1);
 };
 
 }
