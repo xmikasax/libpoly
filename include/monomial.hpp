@@ -21,9 +21,9 @@ public:
     void SetDegree(TIndex index, TDegree degree);
 
     TMonomial &operator*=(const TMonomial &other);
-    TMonomial operator*(const TMonomial &other) const;
+    friend TMonomial operator*(const TMonomial &m1, const TMonomial &m2);
     TMonomial &operator/=(const TMonomial &other);
-    TMonomial operator/(const TMonomial &other) const;
+    friend TMonomial operator/(const TMonomial &m1, const TMonomial &m2);
 
     friend TMonomial Lcm(const TMonomial &a, const TMonomial &b);
 
@@ -32,6 +32,8 @@ private:
 };
 
 TMonomial Lcm(const TMonomial &a, const TMonomial &b);
+TMonomial operator*(const TMonomial &m1, const TMonomial &m2);
+TMonomial operator/(const TMonomial &m1, const TMonomial &m2);
 
 }
 

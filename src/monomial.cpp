@@ -34,9 +34,9 @@ TMonomial &TMonomial::operator*=(const TMonomial &other) {
     return *this;
 }
 
-TMonomial TMonomial::operator*(const TMonomial &other) const {
-    TMonomial res(*this);
-    return res *= other;
+TMonomial operator*(const TMonomial &m1, const TMonomial &m2) {
+    TMonomial res(m1);
+    return res *= m2;
 }
 
 TMonomial &TMonomial::operator/=(const TMonomial &other) {
@@ -46,9 +46,9 @@ TMonomial &TMonomial::operator/=(const TMonomial &other) {
     return *this;
 }
 
-TMonomial TMonomial::operator/(const TMonomial &other) const {
-    TMonomial res(*this);
-    return res /= other;
+TMonomial operator/(const TMonomial &m1, const TMonomial &m2) {
+    TMonomial res(m1);
+    return res /= m2;
 }
 
 TMonomial Lcm(const TMonomial &a, const TMonomial &b) {
