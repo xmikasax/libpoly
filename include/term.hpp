@@ -7,8 +7,6 @@ namespace NLibPoly {
 
 template <typename TCoefficientType>
 class TTerm : public TMonomial {
-private:
-    TCoefficientType Coefficient;
 public:
     TTerm();
     TTerm(const TTerm<TCoefficientType> &other) = default;
@@ -27,6 +25,9 @@ public:
     friend TTerm<T> Lcm(
         const TTerm<T> &a,
         const TTerm<T> &b);
+
+private:
+    TCoefficientType Coefficient;
 };
 
 }

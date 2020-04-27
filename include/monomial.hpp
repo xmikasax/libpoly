@@ -11,10 +11,6 @@ public:
     using TIndex = size_t;
     using TDegree = int32_t;
 
-private:
-    TDegree Degree;
-    std::map<TIndex, TDegree> Variables;
-
 public:
     TMonomial();
     TMonomial(const TMonomial &other) = default;
@@ -35,6 +31,10 @@ public:
     TMonomial operator/(const TMonomial &other) const;
 
     friend TMonomial Lcm(const TMonomial &a, const TMonomial &b);
+
+private:
+    TDegree Degree;
+    std::map<TIndex, TDegree> Variables;
 };
 
 TMonomial Lcm(const TMonomial &a, const TMonomial &b);
