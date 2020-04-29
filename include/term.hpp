@@ -7,15 +7,15 @@
 
 namespace NLibPoly {
 
-template <typename TCoefficientType>
+template <typename UCoefficientType>
 class TTerm : public TMonomial {
 public:
     TTerm() = default;
-    TTerm(TCoefficientType coeff, TMonomial monomial);
+    TTerm(UCoefficientType coeff, TMonomial monomial);
     TTerm(const std::initializer_list<std::pair<TIndex, TDegree>> &init_list);
 
-    TCoefficientType GetCoefficient() const;
-    void SetCoefficient(TCoefficientType new_coeff);
+    UCoefficientType GetCoefficient() const;
+    void SetCoefficient(UCoefficientType new_coeff);
 
     TTerm &operator*=(const TTerm &other);
     TTerm operator*(const TTerm &other) const;
@@ -28,7 +28,7 @@ public:
         const TTerm<T> &b);
 
 private:
-    TCoefficientType Coefficient = TCoefficientType(1);
+    UCoefficientType Coefficient = UCoefficientType(1);
 };
 
 }
