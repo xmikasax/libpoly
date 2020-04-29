@@ -7,14 +7,10 @@ namespace NLibPoly {
 
 namespace NUtils {
 
-class TLibPolyException : public std::exception {
+class TLibPolyException : public std::runtime_error {
 public:
-    TLibPolyException(const char *error);
-
-    virtual const char* what() const noexcept;
-
-private:
-    const char *error = nullptr;
+    TLibPolyException(const char *error)
+        : runtime_error(error) {}
 };
 
 void Halt(const char *error);
