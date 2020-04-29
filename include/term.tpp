@@ -5,14 +5,21 @@
 namespace NLibPoly {
 
 template <typename UCoefficientType>
-TTerm<UCoefficientType>::TTerm(UCoefficientType coeff, TMonomial monomial)
-    : TMonomial(monomial), Coefficient(coeff) {}
+TTerm<UCoefficientType>::TTerm(UCoefficientType coefficient, TMonomial monomial)
+    : Coefficient(coefficient), Monomial(monomial) {}
+
+template<typename UCoefficientType>
+TTerm<UCoefficientType>::TTerm(
+    UCoefficientType coefficient,
+    const std::initializer_list<std::pair<TIndex, TDegree>> &init_list
+)
+    : Coefficient(coefficient), Monomial(init_list) {}
 
 template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(
     const std::initializer_list<std::pair<TIndex, TDegree>> &init_list
 )
-    : TMonomial(init_list) {}
+    : Coefficient(UCoefficientType(1)), Monomial(init_list) {}
 
 template <typename UCoefficientType>
 UCoefficientType TTerm<UCoefficientType>::GetCoefficient() const {
@@ -20,17 +27,27 @@ UCoefficientType TTerm<UCoefficientType>::GetCoefficient() const {
 }
 
 template <typename UCoefficientType>
-void TTerm<UCoefficientType>::SetCoefficient(UCoefficientType new_coeff) {
-    Coefficient = new_coeff;
+void TTerm<UCoefficientType>::SetCoefficient(UCoefficientType coefficient) {
+    Coefficient = coefficient;
+}
+
+template <typename UCoefficientType>
+typename TTerm<UCoefficientType>::TDegree TTerm<UCoefficientType>::GetDegree(TIndex index) const {
+    return Monomial.GetDegree(index);
+}
+
+template <typename UCoefficientType>
+void TTerm<UCoefficientType>::SetDegree(TIndex index, TDegree degree) {
+    Monomial.SetDegree(index, degree);
 }
 
 template <typename UCoefficientType>
 TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator*=(
     const TTerm<UCoefficientType> &other)
 {
-    TMonomial::operator*=(other);
+    Monomial *= other.Monomial;
     Coefficient *= other.Coefficient;
-    return (*this);
+    return *this;
 }
 
 template <typename UCoefficientType>
@@ -46,9 +63,9 @@ template <typename UCoefficientType>
 TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator/=(
     const TTerm<UCoefficientType> &other)
 {
-    TMonomial::operator/=(other);
+    Monomial /= other.Monomial;
     Coefficient /= other.Coefficient;
-    return (*this);
+    return *this;
 }
 
 template <typename UCoefficientType>
@@ -61,13 +78,27 @@ TTerm<UCoefficientType> TTerm<UCoefficientType>::operator/(
 }
 
 template <typename UCoefficientType>
+bool TTerm<UCoefficientType>::operator==(
+    const TTerm<UCoefficientType> &other) const
+{
+    return other.Monomial == Monomial;
+}
+
+template <typename UCoefficientType>
+bool TTerm<UCoefficientType>::operator!=(
+    const TTerm<UCoefficientType> &other) const
+{
+    return !(other == (*this));
+}
+
+template <typename UCoefficientType>
 TTerm<UCoefficientType> Lcm(
     const TTerm<UCoefficientType> &lhs,
     const TTerm<UCoefficientType> &rhs)
 {
     return TTerm<UCoefficientType>(
         lhs.Coefficient * rhs.Coefficient,
-        Lcm(static_cast<const TMonomial&>(lhs), static_cast<const TMonomial&>(rhs)));
+        Lcm(lhs.Monomial, rhs.Monomial));
 }
 
 }

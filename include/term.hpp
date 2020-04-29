@@ -8,19 +8,32 @@
 namespace NLibPoly {
 
 template <typename UCoefficientType>
-class TTerm : public TMonomial {
+class TTerm {
+public:
+    using TIndex = TMonomial::TIndex;
+    using TDegree = TMonomial::TDegree;
+
 public:
     TTerm() = default;
-    TTerm(UCoefficientType coeff, TMonomial monomial);
+    TTerm(UCoefficientType coefficient, TMonomial monomial);
+    TTerm(
+        UCoefficientType coefficient,
+        const std::initializer_list<std::pair<TIndex, TDegree>> &init_list);
     TTerm(const std::initializer_list<std::pair<TIndex, TDegree>> &init_list);
 
     UCoefficientType GetCoefficient() const;
-    void SetCoefficient(UCoefficientType new_coeff);
+    void SetCoefficient(UCoefficientType coefficient);
+
+    TDegree GetDegree(TIndex index) const;
+    void SetDegree(TIndex index, TDegree degree);
 
     TTerm &operator*=(const TTerm &other);
     TTerm operator*(const TTerm &other) const;
     TTerm &operator/=(const TTerm &other);
     TTerm operator/(const TTerm &other) const;
+
+    bool operator==(const TTerm &other) const;
+    bool operator!=(const TTerm &other) const;
 
     template<typename T>
     friend TTerm<T> Lcm(
@@ -29,6 +42,7 @@ public:
 
 private:
     UCoefficientType Coefficient = UCoefficientType(1);
+    TMonomial Monomial;
 };
 
 }
