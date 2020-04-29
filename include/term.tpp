@@ -38,7 +38,8 @@ TTerm<TCoefficientType> TTerm<TCoefficientType>::operator*(
     const TTerm<TCoefficientType> &other) const
 {
     TTerm<TCoefficientType> res(*this);
-    return res *= other;
+    res *= other;
+    return res;
 }
 
 template <typename TCoefficientType>
@@ -55,17 +56,18 @@ TTerm<TCoefficientType> TTerm<TCoefficientType>::operator/(
     const TTerm<TCoefficientType> &other) const
 {
     TTerm<TCoefficientType> res(*this);
-    return res /= other;
+    res /= other;
+    return res;
 }
 
 template <typename TCoefficientType>
 TTerm<TCoefficientType> Lcm(
-    const TTerm<TCoefficientType> &a,
-    const TTerm<TCoefficientType> &b)
+    const TTerm<TCoefficientType> &lhs,
+    const TTerm<TCoefficientType> &rhs)
 {
     return TTerm<TCoefficientType>(
-        a.Coefficient * b.Coefficient,
-        Lcm(static_cast<const TMonomial&>(a), static_cast<const TMonomial&>(b)));
+        lhs.Coefficient * rhs.Coefficient,
+        Lcm(static_cast<const TMonomial&>(lhs), static_cast<const TMonomial&>(rhs)));
 }
 
 }

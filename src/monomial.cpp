@@ -40,9 +40,10 @@ TMonomial &TMonomial::operator*=(const TMonomial &other) {
     return *this;
 }
 
-TMonomial operator*(const TMonomial &m1, const TMonomial &m2) {
-    TMonomial res(m1);
-    return res *= m2;
+TMonomial operator*(const TMonomial &lhs, const TMonomial &rhs) {
+    TMonomial res(lhs);
+    res *= rhs;
+    return res;
 }
 
 TMonomial &TMonomial::operator/=(const TMonomial &other) {
@@ -56,22 +57,23 @@ TMonomial &TMonomial::operator/=(const TMonomial &other) {
     return *this;
 }
 
-TMonomial operator/(const TMonomial &m1, const TMonomial &m2) {
-    TMonomial res(m1);
-    return res /= m2;
+TMonomial operator/(const TMonomial &lhs, const TMonomial &rhs) {
+    TMonomial res(lhs);
+    res /= rhs;
+    return res;
 }
 
-bool operator==(const TMonomial &m1, const TMonomial &m2) {
-    return m1.Variables == m2.Variables;
+bool operator==(const TMonomial &lhs, const TMonomial &rhs) {
+    return lhs.Variables == rhs.Variables;
 }
 
-bool operator!=(const TMonomial &m1, const TMonomial &m2) {
-    return !(m1 == m2);
+bool operator!=(const TMonomial &lhs, const TMonomial &rhs) {
+    return !(lhs == rhs);
 }
 
-TMonomial Lcm(const TMonomial &a, const TMonomial &b) {
-    TMonomial res(a);
-    for (const auto &it : b.Variables) {
+TMonomial Lcm(const TMonomial &lhs, const TMonomial &rhs) {
+    TMonomial res(lhs);
+    for (const auto &it : rhs.Variables) {
         res.SetDegree(it.first, std::max(
             res.GetDegree(it.first),
             it.second
