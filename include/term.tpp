@@ -11,13 +11,13 @@ TTerm<UCoefficientType>::TTerm(UCoefficientType coefficient, TMonomial monomial)
 template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(
     UCoefficientType coefficient,
-    const std::initializer_list<std::pair<TIndex, TDegree>> &init_list
+    std::initializer_list<std::pair<TIndex, TDegree>> init_list
 )
     : Coefficient(coefficient), Monomial(init_list) {}
 
 template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(
-    const std::initializer_list<std::pair<TIndex, TDegree>> &init_list
+    std::initializer_list<std::pair<TIndex, TDegree>> init_list
 )
     : Coefficient(UCoefficientType(1)), Monomial(init_list) {}
 

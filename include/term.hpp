@@ -18,8 +18,8 @@ public:
     TTerm(UCoefficientType coefficient, TMonomial monomial);
     TTerm(
         UCoefficientType coefficient,
-        const std::initializer_list<std::pair<TIndex, TDegree>> &init_list);
-    TTerm(const std::initializer_list<std::pair<TIndex, TDegree>> &init_list);
+        std::initializer_list<std::pair<TIndex, TDegree>> init_list);
+    TTerm(std::initializer_list<std::pair<TIndex, TDegree>> init_list);
 
     UCoefficientType GetCoefficient() const;
     void SetCoefficient(UCoefficientType coefficient);

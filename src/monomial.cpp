@@ -10,7 +10,7 @@ TMonomial::TMonomial(TIndex index, TDegree degree) {
     SetDegree(index, degree);
 }
 
-TMonomial::TMonomial(const std::initializer_list<std::pair<TIndex, TDegree>> &init_list) {
+TMonomial::TMonomial(std::initializer_list<std::pair<TIndex, TDegree>> init_list) {
     for (const auto &it : init_list) {
         SetDegree(it.first, it.second);
     }
