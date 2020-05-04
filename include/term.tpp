@@ -22,12 +22,12 @@ TTerm<UCoefficientType>::TTerm(
     : Coefficient(UCoefficientType(1)), Monomial(init_list) {}
 
 template <typename UCoefficientType>
-UCoefficientType TTerm<UCoefficientType>::GetCoefficient() const {
+typename TTerm<UCoefficientType>::TConstCoefficientRef TTerm<UCoefficientType>::GetCoefficient() const {
     return Coefficient;
 }
 
 template <typename UCoefficientType>
-void TTerm<UCoefficientType>::SetCoefficient(UCoefficientType coefficient) {
+void TTerm<UCoefficientType>::SetCoefficient(TTerm::TConstCoefficientRef coefficient) {
     Coefficient = coefficient;
 }
 

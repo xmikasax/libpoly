@@ -4,6 +4,7 @@
 #include "monomial.hpp"
 
 #include <utility>
+#include <type_traits>
 
 namespace NLibPoly {
 
@@ -12,6 +13,11 @@ class TTerm {
 public:
     using TIndex = TMonomial::TIndex;
     using TDegree = TMonomial::TDegree;
+    using TConstCoefficientRef = std::conditional_t<
+        std::is_arithmetic_v<UCoefficientType>,
+        UCoefficientType,
+        std::add_lvalue_reference_t<std::add_const_t<UCoefficientType>>
+    >;
 
 public:
     TTerm() = default;
@@ -21,8 +27,8 @@ public:
         std::initializer_list<std::pair<TIndex, TDegree>> init_list);
     TTerm(std::initializer_list<std::pair<TIndex, TDegree>> init_list);
 
-    UCoefficientType GetCoefficient() const;
-    void SetCoefficient(UCoefficientType coefficient);
+    TConstCoefficientRef GetCoefficient() const;
+    void SetCoefficient(TConstCoefficientRef coefficient);
 
     TDegree GetDegree(TIndex index) const;
     void SetDegree(TIndex index, TDegree degree);
