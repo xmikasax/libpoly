@@ -28,7 +28,7 @@ public:
     TTerm(std::initializer_list<std::pair<TIndex, TDegree>> init_list);
 
     TConstCoefficientRef GetCoefficient() const;
-    void SetCoefficient(TConstCoefficientRef coefficient);
+    void SetCoefficient(UCoefficientType coefficient);
 
     TDegree GetDegree(TIndex index) const;
     void SetDegree(TIndex index, TDegree degree);

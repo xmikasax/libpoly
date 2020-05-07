@@ -6,8 +6,8 @@ namespace NLibPoly {
 
 template <typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(UCoefficientType coefficient, TMonomial monomial)
-    : Coefficient(coefficient)
-    , Monomial(monomial)
+    : Coefficient(std::move(coefficient))
+    , Monomial(std::move(monomial))
 {
     if (coefficient == UCoefficientType(0)) {
         Monomial = TMonomial();
@@ -19,7 +19,7 @@ TTerm<UCoefficientType>::TTerm(
     UCoefficientType coefficient,
     std::initializer_list<std::pair<TIndex, TDegree>> init_list)
 
-    : Coefficient(coefficient)
+    : Coefficient(std::move(coefficient))
     , Monomial(init_list)
 {
     if (coefficient == UCoefficientType(0)) {
@@ -41,8 +41,8 @@ typename TTerm<UCoefficientType>::TConstCoefficientRef TTerm<UCoefficientType>::
 }
 
 template <typename UCoefficientType>
-void TTerm<UCoefficientType>::SetCoefficient(TTerm::TConstCoefficientRef coefficient) {
-    Coefficient = coefficient;
+void TTerm<UCoefficientType>::SetCoefficient(UCoefficientType coefficient) {
+    Coefficient = std::move(coefficient);
     if (Coefficient == UCoefficientType(0)) {
         Monomial = TMonomial();
     }
