@@ -6,20 +6,34 @@ namespace NLibPoly {
 
 template <typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(UCoefficientType coefficient, TMonomial monomial)
-    : Coefficient(coefficient), Monomial(monomial) {}
+    : Coefficient(coefficient)
+    , Monomial(monomial)
+{
+    if (coefficient == UCoefficientType(0)) {
+        Monomial = TMonomial();
+    }
+}
 
 template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(
     UCoefficientType coefficient,
-    std::initializer_list<std::pair<TIndex, TDegree>> init_list
-)
-    : Coefficient(coefficient), Monomial(init_list) {}
+    std::initializer_list<std::pair<TIndex, TDegree>> init_list)
+
+    : Coefficient(coefficient)
+    , Monomial(init_list)
+{
+    if (coefficient == UCoefficientType(0)) {
+        Monomial = TMonomial();
+    }
+}
 
 template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(
-    std::initializer_list<std::pair<TIndex, TDegree>> init_list
-)
-    : Coefficient(UCoefficientType(1)), Monomial(init_list) {}
+    std::initializer_list<std::pair<TIndex, TDegree>> init_list)
+
+    : Coefficient(UCoefficientType(1))
+    , Monomial(init_list)
+{}
 
 template <typename UCoefficientType>
 typename TTerm<UCoefficientType>::TConstCoefficientRef TTerm<UCoefficientType>::GetCoefficient() const {
@@ -29,6 +43,9 @@ typename TTerm<UCoefficientType>::TConstCoefficientRef TTerm<UCoefficientType>::
 template <typename UCoefficientType>
 void TTerm<UCoefficientType>::SetCoefficient(TTerm::TConstCoefficientRef coefficient) {
     Coefficient = coefficient;
+    if (Coefficient == UCoefficientType(0)) {
+        Monomial = TMonomial();
+    }
 }
 
 template <typename UCoefficientType>
@@ -47,6 +64,11 @@ TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator*=(
 {
     Monomial *= other.Monomial;
     Coefficient *= other.Coefficient;
+
+    if (Coefficient == UCoefficientType(0)) {
+        Monomial = TMonomial();
+    }
+
     return *this;
 }
 
@@ -65,6 +87,11 @@ TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator/=(
 {
     Monomial /= other.Monomial;
     Coefficient /= other.Coefficient;
+
+    if (Coefficient == UCoefficientType(0)) {
+        Monomial = TMonomial();
+    }
+
     return *this;
 }
 

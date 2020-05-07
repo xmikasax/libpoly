@@ -47,7 +47,7 @@ public:
         const TTerm<T> &b);
 
 private:
-    UCoefficientType Coefficient = UCoefficientType(1);
+    UCoefficientType Coefficient = UCoefficientType(0);
     TMonomial Monomial;
 };
 
