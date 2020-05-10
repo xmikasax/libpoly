@@ -36,6 +36,11 @@ TTerm<UCoefficientType>::TTerm(
 {}
 
 template <typename UCoefficientType>
+const TMonomial &TTerm<UCoefficientType>::GetMonomial() const {
+    return Monomial;
+}
+
+template <typename UCoefficientType>
 typename TTerm<UCoefficientType>::TConstCoefficientRef TTerm<UCoefficientType>::GetCoefficient() const {
     return Coefficient;
 }

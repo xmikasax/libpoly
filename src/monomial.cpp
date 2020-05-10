@@ -82,4 +82,52 @@ TMonomial Lcm(const TMonomial &lhs, const TMonomial &rhs) {
     return res;
 }
 
+TMonomial::TIterator TMonomial::begin() {
+    return Variables.begin();
+}
+
+TMonomial::TIterator TMonomial::end() {
+    return Variables.end();
+}
+
+TMonomial::TConstIterator TMonomial::begin() const {
+    return Variables.begin();
+}
+
+TMonomial::TConstIterator TMonomial::end() const {
+    return Variables.end();
+}
+
+TMonomial::TReverseIterator TMonomial::rbegin() {
+    return Variables.rbegin();
+}
+
+TMonomial::TReverseIterator TMonomial::rend() {
+    return Variables.rend();
+}
+
+TMonomial::TConstReverseIterator TMonomial::rbegin() const {
+    return Variables.rbegin();
+}
+
+TMonomial::TConstReverseIterator TMonomial::rend() const {
+    return Variables.rend();
+}
+
+TMonomial::TConstIterator TMonomial::cbegin() const {
+    return Variables.cbegin();
+}
+
+TMonomial::TConstIterator TMonomial::cend() const {
+    return Variables.cend();
+}
+
+TMonomial::TConstReverseIterator TMonomial::crbegin() const {
+    return Variables.crbegin();
+}
+
+TMonomial::TConstReverseIterator TMonomial::crend() const {
+    return Variables.crend();
+}
+
 }

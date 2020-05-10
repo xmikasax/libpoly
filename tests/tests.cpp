@@ -6,10 +6,12 @@
 #include "monomial.hpp"
 #include "term.hpp"
 #include "utils.hpp"
+#include "order.hpp"
 
 void TestAll() {
     TestMonomial();
     TestTerm();
+    TestOrder();
 }
 
 void TestMonomial() {
@@ -72,4 +74,25 @@ void TestTerm() {
     assert(e.GetCoefficient() == 2);
 
     std::cerr << "Term tests OK!" << std::endl;
+}
+
+void TestOrder() {
+    using namespace NLibPoly;
+
+    TMonomial a{{1, 1}, {2, 1}};
+    TMonomial b{{1, 1}, {2, 1}};
+
+    assert(TLexOrder()(a, b) == 0);
+
+    TMonomial c{{1, 1}, {2, 1}};
+    TMonomial d{{1, 1}, {2, 2}};
+
+    assert(TLexOrder()(c, d) < 0);
+
+    TMonomial e{{1, 2}, {2, 1}};
+    TMonomial f{{1, 1}, {2, 1}};
+
+    assert(TLexOrder()(e, f) > 0);
+
+    std::cerr << "Order tests OK!" << std::endl;
 }

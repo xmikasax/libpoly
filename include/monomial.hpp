@@ -11,6 +11,11 @@ class TMonomial {
 public:
     using TIndex = size_t;
     using TDegree = size_t;
+    using TContainer = std::map<TIndex, TDegree>;
+    using TIterator = TContainer::iterator;
+    using TConstIterator = TContainer::const_iterator;
+    using TReverseIterator = TContainer::reverse_iterator;
+    using TConstReverseIterator = TContainer::const_reverse_iterator;
 
 public:
     TMonomial() = default;
@@ -30,8 +35,21 @@ public:
 
     friend TMonomial Lcm(const TMonomial &a, const TMonomial &b);
 
+    TIterator begin();
+    TIterator end();
+    TConstIterator begin() const;
+    TConstIterator end() const;
+    TReverseIterator rbegin();
+    TReverseIterator rend();
+    TConstReverseIterator rbegin() const;
+    TConstReverseIterator rend() const;
+    TConstIterator cbegin() const;
+    TConstIterator cend() const;
+    TConstReverseIterator crbegin() const;
+    TConstReverseIterator crend() const;
+
 private:
-    std::map<TIndex, TDegree> Variables;
+    TContainer Variables;
 };
 
 TMonomial Lcm(const TMonomial &a, const TMonomial &b);

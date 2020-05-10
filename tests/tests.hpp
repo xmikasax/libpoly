@@ -3,6 +3,7 @@
 
 void TestMonomial();
 void TestTerm();
+void TestOrder();
 void TestAll();
 
 #endif // INCLUDE_TESTS_HPP

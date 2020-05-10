@@ -27,6 +27,8 @@ public:
         std::initializer_list<std::pair<TIndex, TDegree>> init_list);
     TTerm(std::initializer_list<std::pair<TIndex, TDegree>> init_list);
 
+    const TMonomial &GetMonomial() const;
+
     TConstCoefficientRef GetCoefficient() const;
     void SetCoefficient(UCoefficientType coefficient);
 

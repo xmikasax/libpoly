@@ -13,6 +13,7 @@ add_library(
     SHARED
     src/monomial.cpp
     src/utils.cpp
+    src/order.cpp
 )
 
 target_include_directories(poly PUBLIC include)
