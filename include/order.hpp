@@ -18,7 +18,12 @@ private:
     virtual int Cmp(const TMonomial &m1, const TMonomial &m2) const = 0;
 };
 
-class TLexOrder : public TOrder {
+class TLexicographicOrder : public TOrder {
+private:
+    int Cmp(const TMonomial &m1, const TMonomial &m2) const override;
+};
+
+class TDegreeOrder : public TOrder {
 private:
     int Cmp(const TMonomial &m1, const TMonomial &m2) const override;
 };

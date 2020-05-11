@@ -116,21 +116,42 @@ void TestOrder() {
         TMonomial a{{1, 1}, {2, 1}};
         TMonomial b{{1, 1}, {2, 1}};
 
-        assert(TLexOrder()(a, b) == 0);
+        assert(!TLexicographicOrder()(a, b));
     }
 
     {
         TMonomial a{{1, 1}, {2, 1}};
         TMonomial b{{1, 1}, {2, 2}};
 
-        assert(TLexOrder()(a, b) < 0);
+        assert(TLexicographicOrder()(a, b));
     }
 
     {
         TMonomial a{{1, 2}, {2, 1}};
         TMonomial b{{1, 1}, {2, 1}};
 
-        assert(TLexOrder()(a, b) > 0);
+        assert(!TLexicographicOrder()(a, b));
+    }
+
+    {
+        TMonomial a{{1, 1}, {2, 2}};
+        TMonomial b{{1, 2}, {2, 1}};
+
+        assert(!TDegreeOrder()(a, b));
+    }
+
+    {
+        TMonomial a{{1, 1}, {2, 1}};
+        TMonomial b{{1, 1}, {2, 2}};
+
+        assert(TDegreeOrder()(a, b));
+    }
+
+    {
+        TMonomial a{{1, 1}, {2, 1}, {3, 1}};
+        TMonomial b{{1, 1}, {2, 1}};
+
+        assert(!TLexicographicOrder()(a, b));
     }
 
     std::cerr << "Order tests OK!" << std::endl;
