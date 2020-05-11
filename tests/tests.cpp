@@ -157,5 +157,14 @@ void TestOrder() {
         assert(!TLexicographicOrder()(a, b));
     }
 
+    {
+        TMonomial a{{1, 2}, {2, 1}, {3, 1}};
+        TMonomial b{{1, 1}, {2, 4}};
+        TMonomial c{{1, 1}, {2, 2}, {3, 1}};
+
+        assert((TCombineOrder<TDegreeOrder, TLexicographicOrder>::Compare(a, b) < 0));
+        assert(!(TCombineOrder<TDegreeOrder, TLexicographicOrder>()(b, c)));
+    }
+
     std::cerr << "Order tests OK!" << std::endl;
 }

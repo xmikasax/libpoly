@@ -77,4 +77,19 @@ int TDegreeOrder::CompareInternal(const TMonomial &m1, const TMonomial &m2) {
     }
 }
 
+template<typename UOrder, typename... UOrders>
+int TCombineOrder<UOrder, UOrders...>::CompareInternal(const TMonomial &m1, const TMonomial &m2) {
+    int comparison = UOrder::Compare(m1, m2);
+    if (comparison != 0) {
+        return comparison;
+    }
+
+    return TCombineOrder<UOrders...>::Compare(m1, m2);
+}
+
+template<typename UOrder>
+int TCombineOrder<UOrder>::CompareInternal(const TMonomial &m1, const TMonomial &m2) {
+    return UOrder::Compare(m1, m2);
+}
+
 }
