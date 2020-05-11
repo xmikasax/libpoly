@@ -57,6 +57,36 @@ int TLexicographicOrder::CompareInternal(const TMonomial &m1, const TMonomial &m
     return 0;
 }
 
+int TReverseLexicographicOrder::CompareInternal(const TMonomial &m1, const TMonomial &m2) {
+    auto it1 = m1.crbegin();
+    auto it2 = m2.crbegin();
+
+    while (it1 != m1.crend() && it2 != m2.crend()) {
+        if (it1->first > it2->first) {
+            return -1;
+        } else if (it1->first < it2->first) {
+            return 1;
+        }
+
+        if (it1->second > it2->second) {
+            return -1;
+        } else if (it1->second < it2->second) {
+            return 1;
+        }
+
+        ++it1;
+        ++it2;
+    }
+
+    if (it1 != m1.crend()) {
+        return -1;
+    } else if (it2 != m2.crend()) {
+        return 1;
+    }
+
+    return 0;
+}
+
 int TDegreeOrder::CompareInternal(const TMonomial &m1, const TMonomial &m2) {
     TMonomial::TDegree degree1 = 0;
     for (const auto &it : m1) {

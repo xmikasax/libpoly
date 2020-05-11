@@ -162,8 +162,32 @@ void TestOrder() {
         TMonomial b{{1, 1}, {2, 4}};
         TMonomial c{{1, 1}, {2, 2}, {3, 1}};
 
-        assert((TCombineOrder<TDegreeOrder, TLexicographicOrder>::Compare(a, b) < 0));
-        assert(!(TCombineOrder<TDegreeOrder, TLexicographicOrder>()(b, c)));
+        assert(TGradedLexicographicOrder::Compare(a, b) < 0);
+        assert(!TGradedLexicographicOrder()(b, c));
+    }
+
+    {
+        TMonomial a{{1, 0}, {2, 2}, {3, 1}};
+        TMonomial b{{1, 0}, {2, 1}, {3, 2}};
+        TMonomial c{{1, 1}, {2, 1}, {3, 2}};
+
+        assert(TReverseLexicographicOrder::Compare(a, b) > 0);
+        assert(TReverseLexicographicOrder::Compare(b, c) > 0);
+    }
+
+    {
+        TMonomial a{{1, 2}};
+        TMonomial b{{1, 1}, {2, 1}};
+        TMonomial c{{2, 2}};
+        TMonomial d{{1, 1}, {3, 1}};
+        TMonomial e{{2, 1}, {3, 1}};
+        TMonomial f{{3, 2}};
+
+        assert(TGradedReverseLexicographicOrder::Compare(a, b) > 0);
+        assert(TGradedReverseLexicographicOrder::Compare(b, c) > 0);
+        assert(TGradedReverseLexicographicOrder::Compare(c, d) > 0);
+        assert(TGradedReverseLexicographicOrder::Compare(d, e) > 0);
+        assert(TGradedReverseLexicographicOrder::Compare(e, f) > 0);
     }
 
     std::cerr << "Order tests OK!" << std::endl;

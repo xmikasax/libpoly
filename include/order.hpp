@@ -24,6 +24,12 @@ private:
     static int CompareInternal(const TMonomial &m1, const TMonomial &m2);
 };
 
+class TReverseLexicographicOrder : public TOrder<TReverseLexicographicOrder> {
+    friend class TOrder<TReverseLexicographicOrder>;
+private:
+    static int CompareInternal(const TMonomial &m1, const TMonomial &m2);
+};
+
 class TDegreeOrder : public TOrder<TDegreeOrder> {
     friend class TOrder<TDegreeOrder>;
 private:
@@ -43,6 +49,9 @@ class TCombineOrder<UOrder> : public TOrder<TCombineOrder<UOrder>> {
 private:
     static int CompareInternal(const TMonomial &m1, const TMonomial &m2);
 };
+
+using TGradedLexicographicOrder = TCombineOrder<TDegreeOrder, TLexicographicOrder>;
+using TGradedReverseLexicographicOrder = TCombineOrder<TDegreeOrder, TReverseLexicographicOrder>;
 
 }
 
