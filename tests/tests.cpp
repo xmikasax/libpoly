@@ -117,6 +117,7 @@ void TestOrder() {
         TMonomial b{{1, 1}, {2, 1}};
 
         assert(!TLexicographicOrder()(a, b));
+        assert(TLexicographicOrder::Compare(a, b) == 0);
     }
 
     {
@@ -124,6 +125,7 @@ void TestOrder() {
         TMonomial b{{1, 1}, {2, 2}};
 
         assert(TLexicographicOrder()(a, b));
+        assert(TLexicographicOrder::Compare(a, b) < 0);
     }
 
     {
@@ -131,6 +133,7 @@ void TestOrder() {
         TMonomial b{{1, 1}, {2, 1}};
 
         assert(!TLexicographicOrder()(a, b));
+        assert(TLexicographicOrder::Compare(a, b) > 0);
     }
 
     {

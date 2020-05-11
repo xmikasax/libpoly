@@ -6,28 +6,32 @@
 
 namespace NLibPoly {
 
+template <typename UOrder>
 class TOrder {
 public:
-    int operator()(const TMonomial &m1, const TMonomial &m2) const;
+    static int Compare(const TMonomial &m1, const TMonomial &m2);
+    bool operator()(const TMonomial &m1, const TMonomial &m2) const;
 
     template <typename UCoefficientType>
-    int operator()(const TTerm<UCoefficientType> &t1, const TTerm<UCoefficientType> &t2) const;
-
-    virtual ~TOrder() {}
-private:
-    virtual int Cmp(const TMonomial &m1, const TMonomial &m2) const = 0;
+    static int Compare(const TTerm<UCoefficientType> &t1, const TTerm<UCoefficientType> &t2);
+    template <typename UCoefficientType>
+    bool operator()(const TTerm<UCoefficientType> &t1, const TTerm<UCoefficientType> &t2) const;
 };
 
-class TLexicographicOrder : public TOrder {
+class TLexicographicOrder : public TOrder<TLexicographicOrder> {
+    friend class TOrder<TLexicographicOrder>;
 private:
-    int Cmp(const TMonomial &m1, const TMonomial &m2) const override;
+    static int CompareInternal(const TMonomial &m1, const TMonomial &m2);
 };
 
-class TDegreeOrder : public TOrder {
+class TDegreeOrder : public TOrder<TDegreeOrder> {
+    friend class TOrder<TDegreeOrder>;
 private:
-    int Cmp(const TMonomial &m1, const TMonomial &m2) const override;
+    static int CompareInternal(const TMonomial &m1, const TMonomial &m2);
 };
 
 }
+
+#include "order.tpp"
 
 #endif // INCLUDE_ORDER_HPP

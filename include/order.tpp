@@ -5,16 +5,29 @@
 
 namespace NLibPoly {
 
-int TOrder::operator()(const TMonomial &m1, const TMonomial &m2) const {
-    return Cmp(m1, m2) < 0;
+template <typename UOrder>
+int TOrder<UOrder>::Compare(const TMonomial &m1, const TMonomial &m2) {
+    return UOrder::CompareInternal(m1, m2);
 }
 
+template <typename UOrder>
+bool TOrder<UOrder>::operator()(const TMonomial &m1, const TMonomial &m2) const {
+    return UOrder::CompareInternal(m1, m2) < 0;
+}
+
+template <typename UOrder>
 template <typename UCoefficientType>
-int TOrder::operator()(const TTerm<UCoefficientType> &t1, const TTerm<UCoefficientType> &t2) const {
-    return Cmp(t1.GetMonomial(), t2.GetMonomial()) < 0;
+int TOrder<UOrder>::Compare(const TTerm<UCoefficientType> &t1, const TTerm<UCoefficientType> &t2) {
+    return UOrder::CompareInternal(t1.GetMonomial(), t2.GetMonomial());
 }
 
-int TLexicographicOrder::Cmp(const TMonomial &m1, const TMonomial &m2) const {
+template <typename UOrder>
+template <typename UCoefficientType>
+bool TOrder<UOrder>::operator()(const TTerm<UCoefficientType> &t1, const TTerm<UCoefficientType> &t2) const {
+    return UOrder::CompareInternal(t1.GetMonomial(), t2.GetMonomial()) < 0;
+}
+
+int TLexicographicOrder::CompareInternal(const TMonomial &m1, const TMonomial &m2) {
     auto it1 = m1.cbegin();
     auto it2 = m2.cbegin();
 
@@ -44,7 +57,7 @@ int TLexicographicOrder::Cmp(const TMonomial &m1, const TMonomial &m2) const {
     return 0;
 }
 
-int TDegreeOrder::Cmp(const TMonomial &m1, const TMonomial &m2) const {
+int TDegreeOrder::CompareInternal(const TMonomial &m1, const TMonomial &m2) {
     TMonomial::TDegree degree1 = 0;
     for (const auto &it : m1) {
         degree1 += it.second;
