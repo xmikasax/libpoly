@@ -20,12 +20,28 @@ public:
     TPolynomial() = default;
     TPolynomial(std::initializer_list<TTerm<UCoefficientType>> init_list);
 
+    size_t Size() const;
+
+    TPolynomial &operator+=(const TPolynomial &other);
+    TPolynomial operator+(const TPolynomial &other) const {
+        TPolynomial res(*this);
+        res += other;
+        return res;
+    }
+
+    TPolynomial &operator-=(const TPolynomial &other);
+    TPolynomial operator-(const TPolynomial &other) const {
+        TPolynomial res(*this);
+        res -= other;
+        return res;
+    }
+
     bool operator==(const TPolynomial &other) const;
     bool operator!=(const TPolynomial &other) const;
 
     template <typename UOutputCoefficientType, typename UOutputOrder>
     friend std::ostream &
-    operator<<(std::ostream &out, const TPolynomial<UOutputCoefficientType, UOutputOrder> &polynomial);
+    operator<<(std::ostream &out, const TPolynomial &polynomial);
 
     TIterator begin();
     TIterator end();

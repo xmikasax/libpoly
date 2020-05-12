@@ -1,6 +1,5 @@
 #include "term.hpp"
 
-#include <utility>
 #include <iostream>
 
 namespace NLibPoly {
@@ -79,15 +78,6 @@ TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator*=(
 }
 
 template <typename UCoefficientType>
-TTerm<UCoefficientType> TTerm<UCoefficientType>::operator*(
-    const TTerm<UCoefficientType> &other) const
-{
-    TTerm<UCoefficientType> res(*this);
-    res *= other;
-    return res;
-}
-
-template <typename UCoefficientType>
 TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator/=(
     const TTerm<UCoefficientType> &other)
 {
@@ -99,15 +89,6 @@ TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator/=(
     }
 
     return *this;
-}
-
-template <typename UCoefficientType>
-TTerm<UCoefficientType> TTerm<UCoefficientType>::operator/(
-    const TTerm<UCoefficientType> &other) const
-{
-    TTerm<UCoefficientType> res(*this);
-    res /= other;
-    return res;
 }
 
 template <typename UCoefficientType>

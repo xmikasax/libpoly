@@ -19,7 +19,7 @@ target_include_directories(poly PUBLIC include)
 target_include_directories(poly PRIVATE src)
 
 target_compile_options(poly
-    PRIVATE -Wall -Wextra -Werror)
+    PRIVATE -Wall -Wextra -Werror -pedantic)
 
 add_executable(test tests/main.cpp tests/tests.cpp)
 target_include_directories(test PRIVATE tests/)

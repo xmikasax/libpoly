@@ -1,6 +1,5 @@
 #include "monomial.hpp"
 
-#include <utility>
 #include <iostream>
 
 #include "utils.hpp"

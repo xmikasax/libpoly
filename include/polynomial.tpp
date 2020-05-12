@@ -7,7 +7,54 @@ namespace NLibPoly {
 template<typename UCoefficientType, typename UOrder>
 TPolynomial<UCoefficientType, UOrder>::TPolynomial(std::initializer_list<TTerm<UCoefficientType>> init_list)
     : Terms(init_list)
-{}
+{
+    if (Terms.size() == 1 && Terms.begin()->GetCoefficient() == UCoefficientType(0)) {
+        Terms.clear();
+    }
+}
+
+template<typename UCoefficientType, typename UOrder>
+size_t TPolynomial<UCoefficientType, UOrder>::Size() const {
+    return Terms.size();
+}
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder> &TPolynomial<UCoefficientType, UOrder>::operator+=(const TPolynomial &other) {
+    for (const auto &it : other) {
+        auto term_iterator = Terms.lower_bound(it);
+        if (*term_iterator != it) {
+            Terms.insert(term_iterator, it);
+        } else {
+            auto value = std::move(*term_iterator);
+            value.SetCoefficient(value.GetCoefficient() + it.GetCoefficient());
+            auto next_iterator = Terms.erase(term_iterator);
+            if (value.GetCoefficient() != UCoefficientType(0)) {
+                Terms.insert(next_iterator, std::move(value));
+            }
+        }
+    }
+
+    return *this;
+}
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder> &TPolynomial<UCoefficientType, UOrder>::operator-=(const TPolynomial &other) {
+    for (const auto &it : other) {
+        auto term_iterator = Terms.lower_bound(it);
+        if (*term_iterator != it) {
+            Terms.insert(term_iterator, {-it.GetCoefficient(), it.GetMonomial()});
+        } else {
+            auto value = std::move(*term_iterator);
+            value.SetCoefficient(value.GetCoefficient() - it.GetCoefficient());
+            auto next_iterator = Terms.erase(term_iterator);
+            if (value.GetCoefficient() != UCoefficientType(0)) {
+                Terms.insert(next_iterator, std::move(value));
+            }
+        }
+    }
+
+    return *this;
+}
 
 template<typename UCoefficientType, typename UOrder>
 bool TPolynomial<UCoefficientType, UOrder>::operator==(const TPolynomial &other) const {
@@ -25,13 +72,13 @@ std::ostream &operator<<(std::ostream &out, const TPolynomial<UCoefficientType, 
         out << "0";
     } else {
         bool first = true;
-        for (const auto &it : polynomial) {
+        for (auto it = polynomial.rbegin(); it != polynomial.rend(); ++it) {
             if (!first) {
                 out << " + ";
             } else {
                 first = false;
             }
-            out << it;
+            out << *it;
         }
     }
 

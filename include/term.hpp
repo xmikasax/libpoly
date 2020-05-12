@@ -3,7 +3,6 @@
 
 #include "monomial.hpp"
 
-#include <utility>
 #include <type_traits>
 #include <iostream>
 
@@ -37,9 +36,18 @@ public:
     void SetDegree(TIndex index, TDegree degree);
 
     TTerm &operator*=(const TTerm &other);
-    TTerm operator*(const TTerm &other) const;
+    TTerm operator*(const TTerm &other) const {
+        TTerm res(*this);
+        res *= other;
+        return res;
+    }
+
     TTerm &operator/=(const TTerm &other);
-    TTerm operator/(const TTerm &other) const;
+    TTerm operator/(const TTerm &other) const {
+        TTerm res(*this);
+        res /= other;
+        return res;
+    }
 
     bool operator==(const TTerm &other) const;
     bool operator!=(const TTerm &other) const;

@@ -219,5 +219,49 @@ void TestPolynomial() {
         assert(b != d);
     }
 
+    {
+        TPolynomial<size_t, TLexicographicOrder> a{
+            {{1, 2}},
+            {{3, 4}}
+        };
+
+        assert(a.Size() == 2);
+    }
+
+    {
+        TPolynomial<size_t, TLexicographicOrder> a{
+            {2, {{1, 2}, {3, 4}}},
+            {{3, 4}, {5, 6}}
+        };
+
+        TPolynomial<size_t, TLexicographicOrder> b{
+            {{3, 4}, {5, 6}},
+            {{7, 8}}
+        };
+
+        TPolynomial<size_t, TLexicographicOrder> c = a + b;
+        TPolynomial<size_t, TLexicographicOrder> d{
+            {2, {{1, 2}, {3, 4}}},
+            {2, {{3, 4}, {5, 6}}},
+            {{7, 8}}
+        };
+
+        TPolynomial<size_t, TLexicographicOrder> e{
+            {2, {{1, 2}, {3, 4}}},
+            {{3, 4}}
+        };
+
+        TPolynomial<size_t, TLexicographicOrder> f = a - e;
+        // TPolynomial<size_t, TLexicographicOrder> d{
+        //     {2, {{1, 2}, {3, 4}}},
+        //     {2, {{3, 4}, {5, 6}}},
+        //     {{7, 8}}
+        // };
+
+        std::cout << f << std::endl;
+
+        assert(c == d);
+    }
+
     std::cerr << "Polynomial tests OK!" << std::endl;
 }
