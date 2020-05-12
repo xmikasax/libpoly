@@ -5,6 +5,7 @@
 
 #include <utility>
 #include <type_traits>
+#include <iostream>
 
 namespace NLibPoly {
 
@@ -47,6 +48,9 @@ public:
     friend TTerm<T> Lcm(
         const TTerm<T> &a,
         const TTerm<T> &b);
+
+    template <typename UOutputCoefficientType>
+    friend std::ostream &operator<<(std::ostream &out, const TTerm<UOutputCoefficientType> &term);
 
 private:
     UCoefficientType Coefficient = UCoefficientType(0);

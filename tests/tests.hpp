@@ -4,6 +4,7 @@
 void TestMonomial();
 void TestTerm();
 void TestOrder();
+void TestPolynomial();
 void TestAll();
 
 #endif // INCLUDE_TESTS_HPP

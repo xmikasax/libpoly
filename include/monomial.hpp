@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <map>
 #include <utility>
+#include <iostream>
 
 namespace NLibPoly {
 
@@ -34,6 +35,8 @@ public:
     friend bool operator!=(const TMonomial &m1, const TMonomial &m2);
 
     friend TMonomial Lcm(const TMonomial &a, const TMonomial &b);
+
+    friend std::ostream &operator<<(std::ostream &out, const TMonomial &monomial);
 
     TIterator begin();
     TIterator end();

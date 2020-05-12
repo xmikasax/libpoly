@@ -1,6 +1,7 @@
 #include "monomial.hpp"
 
 #include <utility>
+#include <iostream>
 
 #include "utils.hpp"
 
@@ -80,6 +81,24 @@ TMonomial Lcm(const TMonomial &lhs, const TMonomial &rhs) {
         ));
     }
     return res;
+}
+
+std::ostream &operator<<(std::ostream &out, const TMonomial &monomial) {
+    if (monomial.begin() == monomial.end()) {
+        out << "0";
+    } else {
+        bool first = true;
+        for (const auto &it : monomial) {
+            if (!first) {
+                out << " ";
+            } else {
+                first = false;
+            }
+            out << "x_{" << it.first << "}^{" << it.second << "}";
+        }
+    }
+
+    return out;
 }
 
 TMonomial::TIterator TMonomial::begin() {

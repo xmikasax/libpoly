@@ -1,6 +1,7 @@
 #include "term.hpp"
 
 #include <utility>
+#include <iostream>
 
 namespace NLibPoly {
 
@@ -113,14 +114,14 @@ template <typename UCoefficientType>
 bool TTerm<UCoefficientType>::operator==(
     const TTerm<UCoefficientType> &other) const
 {
-    return other.Monomial == Monomial;
+    return Coefficient == other.Coefficient && Monomial == other.Monomial;
 }
 
 template <typename UCoefficientType>
 bool TTerm<UCoefficientType>::operator!=(
     const TTerm<UCoefficientType> &other) const
 {
-    return !(other == (*this));
+    return !(*this == other);
 }
 
 template <typename UCoefficientType>
@@ -131,6 +132,21 @@ TTerm<UCoefficientType> Lcm(
     return TTerm<UCoefficientType>(
         lhs.Coefficient * rhs.Coefficient,
         Lcm(lhs.Monomial, rhs.Monomial));
+}
+
+template <typename UCoefficientType>
+std::ostream &operator<<(std::ostream &out, const TTerm<UCoefficientType> &term) {
+    if (term.Coefficient == UCoefficientType(0)) {
+        out << "0";
+    } else {
+        if (term.Coefficient == UCoefficientType(1)) {
+            out << term.Monomial;
+        } else {
+            out << term.Coefficient << " " << term.Monomial;
+        }
+    }
+
+    return out;
 }
 
 }

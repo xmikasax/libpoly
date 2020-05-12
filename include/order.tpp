@@ -28,10 +28,10 @@ bool TOrder<UOrder>::operator()(const TTerm<UCoefficientType> &t1, const TTerm<U
 }
 
 int TLexicographicOrder::CompareInternal(const TMonomial &m1, const TMonomial &m2) {
-    auto it1 = m1.cbegin();
-    auto it2 = m2.cbegin();
+    auto it1 = m1.begin();
+    auto it2 = m2.begin();
 
-    while (it1 != m1.cend() && it2 != m2.cend()) {
+    while (it1 != m1.end() && it2 != m2.end()) {
         if (it1->first > it2->first) {
             return -1;
         } else if (it1->first < it2->first) {
@@ -48,9 +48,9 @@ int TLexicographicOrder::CompareInternal(const TMonomial &m1, const TMonomial &m
         ++it2;
     }
 
-    if (it1 != m1.cend()) {
+    if (it1 != m1.end()) {
         return 1;
-    } else if (it2 != m2.cend()) {
+    } else if (it2 != m2.end()) {
         return -1;
     }
 
@@ -58,10 +58,10 @@ int TLexicographicOrder::CompareInternal(const TMonomial &m1, const TMonomial &m
 }
 
 int TReverseLexicographicOrder::CompareInternal(const TMonomial &m1, const TMonomial &m2) {
-    auto it1 = m1.crbegin();
-    auto it2 = m2.crbegin();
+    auto it1 = m1.rbegin();
+    auto it2 = m2.rbegin();
 
-    while (it1 != m1.crend() && it2 != m2.crend()) {
+    while (it1 != m1.rend() && it2 != m2.rend()) {
         if (it1->first > it2->first) {
             return -1;
         } else if (it1->first < it2->first) {
@@ -78,9 +78,9 @@ int TReverseLexicographicOrder::CompareInternal(const TMonomial &m1, const TMono
         ++it2;
     }
 
-    if (it1 != m1.crend()) {
+    if (it1 != m1.rend()) {
         return -1;
-    } else if (it2 != m2.crend()) {
+    } else if (it2 != m2.rend()) {
         return 1;
     }
 

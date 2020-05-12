@@ -7,11 +7,13 @@
 #include "term.hpp"
 #include "utils.hpp"
 #include "order.hpp"
+#include "polynomial.hpp"
 
 void TestAll() {
     TestMonomial();
     TestTerm();
     TestOrder();
+    TestPolynomial();
 }
 
 void TestMonomial() {
@@ -80,7 +82,7 @@ void TestTerm() {
     }
 
     {
-        TTerm<size_t> a(2, {{2, 1}});
+        TTerm<size_t> a{2, {{2, 1}}};
         TTerm<size_t> b{{2, 1}};
         TTerm<size_t> c = a / b;
         assert(c.GetCoefficient() == 2);
@@ -88,7 +90,7 @@ void TestTerm() {
     }
 
     {
-        TTerm<size_t> a(2, {{2, 1}});
+        TTerm<size_t> a{2, {{2, 1}}};
         TTerm<size_t> b{{2, 1}};
         TTerm<size_t> d = b * a;
         assert(d.GetDegree(2) == 2);
@@ -96,7 +98,7 @@ void TestTerm() {
     }
 
     {
-        TTerm<size_t> a(2, {{2, 2}});
+        TTerm<size_t> a{2, {{2, 2}}};
         TTerm<size_t> b{{2, 1}};
         b.SetDegree(3, 1);
         TTerm<size_t> c = Lcm(a, b);
@@ -191,4 +193,31 @@ void TestOrder() {
     }
 
     std::cerr << "Order tests OK!" << std::endl;
+}
+
+void TestPolynomial() {
+    using namespace NLibPoly;
+
+    {
+        TPolynomial<size_t, TLexicographicOrder> a{
+            {{1, 2}, {3, 4}}
+        };
+
+        TPolynomial<size_t, TLexicographicOrder> b{
+            {{1, 2}, {3, 4}}
+        };
+
+        TPolynomial<size_t, TLexicographicOrder> c{
+            {1, {{2, 3}}}
+        };
+
+        TPolynomial<size_t, TLexicographicOrder> d{
+            {{1, 2}, {3, 5}}
+        };
+
+        assert(a == b);
+        assert(b != d);
+    }
+
+    std::cerr << "Polynomial tests OK!" << std::endl;
 }
