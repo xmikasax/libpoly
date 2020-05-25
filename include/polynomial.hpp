@@ -1,8 +1,8 @@
 #ifndef INCLUDE_POLYNOMIAL_HPP
 #define INCLUDE_POLYNOMIAL_HPP
 
-#include <set>
 #include <iostream>
+#include <set>
 
 #include "term.hpp"
 
@@ -11,37 +11,39 @@ namespace NLibPoly {
 template<typename UCoefficientType, typename UOrder>
 class TPolynomial {
 public:
-    using TContainer = std::set<TTerm<UCoefficientType>, UOrder>;
-    using TIterator = typename TContainer::iterator;
-    using TConstIterator = typename TContainer::const_iterator;
-    using TReverseIterator = typename TContainer::reverse_iterator;
+    using TContainer            = std::set<TTerm<UCoefficientType>, UOrder>;
+    using TIterator             = typename TContainer::iterator;
+    using TConstIterator        = typename TContainer::const_iterator;
+    using TReverseIterator      = typename TContainer::reverse_iterator;
     using TConstReverseIterator = typename TContainer::const_reverse_iterator;
+
 public:
     TPolynomial() = default;
     TPolynomial(std::initializer_list<TTerm<UCoefficientType>> init_list);
 
     size_t Size() const;
 
-    TPolynomial &operator+=(const TPolynomial &other);
-    TPolynomial operator+(const TPolynomial &other) const {
+    TPolynomial& operator+=(const TPolynomial& other);
+    TPolynomial operator+(const TPolynomial& other) const
+    {
         TPolynomial res(*this);
         res += other;
         return res;
     }
 
-    TPolynomial &operator-=(const TPolynomial &other);
-    TPolynomial operator-(const TPolynomial &other) const {
+    TPolynomial& operator-=(const TPolynomial& other);
+    TPolynomial operator-(const TPolynomial& other) const
+    {
         TPolynomial res(*this);
         res -= other;
         return res;
     }
 
-    bool operator==(const TPolynomial &other) const;
-    bool operator!=(const TPolynomial &other) const;
+    bool operator==(const TPolynomial& other) const;
+    bool operator!=(const TPolynomial& other) const;
 
-    template <typename UOutputCoefficientType, typename UOutputOrder>
-    friend std::ostream &
-    operator<<(std::ostream &out, const TPolynomial &polynomial);
+    template<typename UOutputCoefficientType, typename UOutputOrder>
+    friend std::ostream& operator<<(std::ostream& out, const TPolynomial& polynomial);
 
     TIterator begin();
     TIterator end();
@@ -55,6 +57,7 @@ public:
     TConstIterator cend() const;
     TConstReverseIterator crbegin() const;
     TConstReverseIterator crend() const;
+
 private:
     TContainer Terms;
 };

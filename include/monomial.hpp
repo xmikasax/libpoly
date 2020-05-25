@@ -2,19 +2,19 @@
 #define INCLUDE_MONOMIAL_HPP
 
 #include <cstdint>
-#include <map>
 #include <iostream>
+#include <map>
 
 namespace NLibPoly {
 
 class TMonomial {
 public:
-    using TIndex = size_t;
-    using TDegree = size_t;
-    using TContainer = std::map<TIndex, TDegree>;
-    using TIterator = TContainer::iterator;
-    using TConstIterator = TContainer::const_iterator;
-    using TReverseIterator = TContainer::reverse_iterator;
+    using TIndex                = size_t;
+    using TDegree               = size_t;
+    using TContainer            = std::map<TIndex, TDegree>;
+    using TIterator             = TContainer::iterator;
+    using TConstIterator        = TContainer::const_iterator;
+    using TReverseIterator      = TContainer::reverse_iterator;
     using TConstReverseIterator = TContainer::const_reverse_iterator;
 
 public:
@@ -25,17 +25,17 @@ public:
     TDegree GetDegree(TIndex index) const;
     void SetDegree(TIndex index, TDegree degree);
 
-    TMonomial &operator*=(const TMonomial &other);
-    friend TMonomial operator*(const TMonomial &m1, const TMonomial &m2);
-    TMonomial &operator/=(const TMonomial &other);
-    friend TMonomial operator/(const TMonomial &m1, const TMonomial &m2);
+    TMonomial& operator*=(const TMonomial& other);
+    friend TMonomial operator*(const TMonomial& m1, const TMonomial& m2);
+    TMonomial& operator/=(const TMonomial& other);
+    friend TMonomial operator/(const TMonomial& m1, const TMonomial& m2);
 
-    friend bool operator==(const TMonomial &m1, const TMonomial &m2);
-    friend bool operator!=(const TMonomial &m1, const TMonomial &m2);
+    friend bool operator==(const TMonomial& m1, const TMonomial& m2);
+    friend bool operator!=(const TMonomial& m1, const TMonomial& m2);
 
-    friend TMonomial Lcm(const TMonomial &a, const TMonomial &b);
+    friend TMonomial Lcm(const TMonomial& a, const TMonomial& b);
 
-    friend std::ostream &operator<<(std::ostream &out, const TMonomial &monomial);
+    friend std::ostream& operator<<(std::ostream& out, const TMonomial& monomial);
 
     TIterator begin();
     TIterator end();
@@ -54,11 +54,11 @@ private:
     TContainer Variables;
 };
 
-TMonomial Lcm(const TMonomial &a, const TMonomial &b);
-TMonomial operator*(const TMonomial &m1, const TMonomial &m2);
-TMonomial operator/(const TMonomial &m1, const TMonomial &m2);
-bool operator==(const TMonomial &m1, const TMonomial &m2);
-bool operator!=(const TMonomial &m1, const TMonomial &m2);
+TMonomial Lcm(const TMonomial& a, const TMonomial& b);
+TMonomial operator*(const TMonomial& m1, const TMonomial& m2);
+TMonomial operator/(const TMonomial& m1, const TMonomial& m2);
+bool operator==(const TMonomial& m1, const TMonomial& m2);
+bool operator!=(const TMonomial& m1, const TMonomial& m2);
 
 }
 

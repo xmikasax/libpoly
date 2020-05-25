@@ -5,8 +5,9 @@
 namespace NLibPoly {
 
 template<typename UCoefficientType, typename UOrder>
-TPolynomial<UCoefficientType, UOrder>::TPolynomial(std::initializer_list<TTerm<UCoefficientType>> init_list)
-    : Terms(init_list)
+TPolynomial<UCoefficientType, UOrder>::TPolynomial(
+    std::initializer_list<TTerm<UCoefficientType>> init_list)
+        : Terms(init_list)
 {
     if (Terms.size() == 1 && Terms.begin()->GetCoefficient() == UCoefficientType(0)) {
         Terms.clear();
@@ -14,13 +15,16 @@ TPolynomial<UCoefficientType, UOrder>::TPolynomial(std::initializer_list<TTerm<U
 }
 
 template<typename UCoefficientType, typename UOrder>
-size_t TPolynomial<UCoefficientType, UOrder>::Size() const {
+size_t TPolynomial<UCoefficientType, UOrder>::Size() const
+{
     return Terms.size();
 }
 
 template<typename UCoefficientType, typename UOrder>
-TPolynomial<UCoefficientType, UOrder> &TPolynomial<UCoefficientType, UOrder>::operator+=(const TPolynomial &other) {
-    for (const auto &it : other) {
+TPolynomial<UCoefficientType, UOrder>&
+TPolynomial<UCoefficientType, UOrder>::operator+=(const TPolynomial& other)
+{
+    for (const auto& it : other) {
         auto term_iterator = Terms.lower_bound(it);
         if (*term_iterator != it) {
             Terms.insert(term_iterator, it);
@@ -38,11 +42,13 @@ TPolynomial<UCoefficientType, UOrder> &TPolynomial<UCoefficientType, UOrder>::op
 }
 
 template<typename UCoefficientType, typename UOrder>
-TPolynomial<UCoefficientType, UOrder> &TPolynomial<UCoefficientType, UOrder>::operator-=(const TPolynomial &other) {
-    for (const auto &it : other) {
+TPolynomial<UCoefficientType, UOrder>&
+TPolynomial<UCoefficientType, UOrder>::operator-=(const TPolynomial& other)
+{
+    for (const auto& it : other) {
         auto term_iterator = Terms.lower_bound(it);
         if (*term_iterator != it) {
-            Terms.insert(term_iterator, {-it.GetCoefficient(), it.GetMonomial()});
+            Terms.insert(term_iterator, { -it.GetCoefficient(), it.GetMonomial() });
         } else {
             auto value = std::move(*term_iterator);
             value.SetCoefficient(value.GetCoefficient() - it.GetCoefficient());
@@ -57,17 +63,20 @@ TPolynomial<UCoefficientType, UOrder> &TPolynomial<UCoefficientType, UOrder>::op
 }
 
 template<typename UCoefficientType, typename UOrder>
-bool TPolynomial<UCoefficientType, UOrder>::operator==(const TPolynomial &other) const {
+bool TPolynomial<UCoefficientType, UOrder>::operator==(const TPolynomial& other) const
+{
     return Terms == other.Terms;
 }
 
 template<typename UCoefficientType, typename UOrder>
-bool TPolynomial<UCoefficientType, UOrder>::operator!=(const TPolynomial &other) const {
+bool TPolynomial<UCoefficientType, UOrder>::operator!=(const TPolynomial& other) const
+{
     return !(*this == other);
 }
 
-template <typename UCoefficientType, typename UOrder>
-std::ostream &operator<<(std::ostream &out, const TPolynomial<UCoefficientType, UOrder> &polynomial) {
+template<typename UCoefficientType, typename UOrder>
+std::ostream& operator<<(std::ostream& out, const TPolynomial<UCoefficientType, UOrder>& polynomial)
+{
     if (polynomial.begin() == polynomial.end()) {
         out << "0";
     } else {
@@ -87,75 +96,86 @@ std::ostream &operator<<(std::ostream &out, const TPolynomial<UCoefficientType, 
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TIterator
-TPolynomial<UCoefficientType, UOrder>::begin() {
+TPolynomial<UCoefficientType, UOrder>::begin()
+{
     return Terms.begin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::end() {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::end()
+{
     return Terms.end();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::begin() const {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::begin() const
+{
     return Terms.begin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::end() const {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::end() const
+{
     return Terms.end();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::rbegin() {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::rbegin()
+{
     return Terms.rbegin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::rend() {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::rend()
+{
     return Terms.rend();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::rbegin() const {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::rbegin() const
+{
     return Terms.rbegin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::rend() const {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::rend() const
+{
     return Terms.rend();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::cbegin() const {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::cbegin() const
+{
     return Terms.cbegin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::cend() const {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::cend() const
+{
     return Terms.cend();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::crbegin() const {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::crbegin() const
+{
     return Terms.crbegin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::crend() const {
+TPolynomial<UCoefficientType, UOrder>::TPolynomial::crend() const
+{
     return Terms.crend();
 }
-
 
 }

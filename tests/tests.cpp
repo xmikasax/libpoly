@@ -1,22 +1,24 @@
 #include "tests.hpp"
 
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
 #include "monomial.hpp"
-#include "term.hpp"
-#include "utils.hpp"
 #include "order.hpp"
 #include "polynomial.hpp"
+#include "term.hpp"
+#include "utils.hpp"
 
-void TestAll() {
+void TestAll()
+{
     TestMonomial();
     TestTerm();
     TestOrder();
     TestPolynomial();
 }
 
-void TestMonomial() {
+void TestMonomial()
+{
     using namespace NLibPoly;
 
     {
@@ -27,23 +29,23 @@ void TestMonomial() {
     }
 
     {
-        TMonomial a{{2, 2}};
-        TMonomial b{{2, 1}};
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 } };
         TMonomial c = a / b;
         assert(c.GetDegree(0) == 0);
         assert(c.GetDegree(2) == 1);
     }
 
     {
-        TMonomial a{{2, 2}};
-        TMonomial b{{2, 1}};
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 } };
         TMonomial c = b * a;
         assert(c.GetDegree(2) == 3);
     }
 
     {
-        TMonomial a{{2, 2}};
-        TMonomial b{{2, 1}, {3, 1}};
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 }, { 3, 1 } };
         TMonomial c = Lcm(a, b);
 
         assert(c.GetDegree(2) == 2);
@@ -51,17 +53,18 @@ void TestMonomial() {
     }
 
     {
-        TMonomial a{{2, 2}};
-        TMonomial b{{2, 1}, {3, 1}};
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 }, { 3, 1 } };
         try {
             TMonomial bad = b / a;
             assert(false);
-        } catch (NUtils::TLibPolyException& e) {}
+        } catch (NUtils::TLibPolyException& e) {
+        }
     }
 
     {
-        TMonomial a{{2, 2}};
-        TMonomial b{{2, 1}};
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 } };
         assert(b * b == a);
         assert(b != a);
     }
@@ -69,7 +72,8 @@ void TestMonomial() {
     std::cerr << "Monomial tests OK!" << std::endl;
 }
 
-void TestTerm() {
+void TestTerm()
+{
     using namespace NLibPoly;
 
     {
@@ -82,24 +86,24 @@ void TestTerm() {
     }
 
     {
-        TTerm<size_t> a{2, {{2, 1}}};
-        TTerm<size_t> b{{2, 1}};
+        TTerm<size_t> a{ 2, { { 2, 1 } } };
+        TTerm<size_t> b{ { 2, 1 } };
         TTerm<size_t> c = a / b;
         assert(c.GetCoefficient() == 2);
         assert(c.GetDegree(2) == 0);
     }
 
     {
-        TTerm<size_t> a{2, {{2, 1}}};
-        TTerm<size_t> b{{2, 1}};
+        TTerm<size_t> a{ 2, { { 2, 1 } } };
+        TTerm<size_t> b{ { 2, 1 } };
         TTerm<size_t> d = b * a;
         assert(d.GetDegree(2) == 2);
         assert(d.GetCoefficient() == 2);
     }
 
     {
-        TTerm<size_t> a{2, {{2, 2}}};
-        TTerm<size_t> b{{2, 1}};
+        TTerm<size_t> a{ 2, { { 2, 2 } } };
+        TTerm<size_t> b{ { 2, 1 } };
         b.SetDegree(3, 1);
         TTerm<size_t> c = Lcm(a, b);
 
@@ -111,79 +115,80 @@ void TestTerm() {
     std::cerr << "Term tests OK!" << std::endl;
 }
 
-void TestOrder() {
+void TestOrder()
+{
     using namespace NLibPoly;
 
     {
-        TMonomial a{{1, 1}, {2, 1}};
-        TMonomial b{{1, 1}, {2, 1}};
+        TMonomial a{ { 1, 1 }, { 2, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 1 } };
 
         assert(!TLexicographicOrder()(a, b));
         assert(TLexicographicOrder::Compare(a, b) == 0);
     }
 
     {
-        TMonomial a{{1, 1}, {2, 1}};
-        TMonomial b{{1, 1}, {2, 2}};
+        TMonomial a{ { 1, 1 }, { 2, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 2 } };
 
         assert(TLexicographicOrder()(a, b));
         assert(TLexicographicOrder::Compare(a, b) < 0);
     }
 
     {
-        TMonomial a{{1, 2}, {2, 1}};
-        TMonomial b{{1, 1}, {2, 1}};
+        TMonomial a{ { 1, 2 }, { 2, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 1 } };
 
         assert(!TLexicographicOrder()(a, b));
         assert(TLexicographicOrder::Compare(a, b) > 0);
     }
 
     {
-        TMonomial a{{1, 1}, {2, 2}};
-        TMonomial b{{1, 2}, {2, 1}};
+        TMonomial a{ { 1, 1 }, { 2, 2 } };
+        TMonomial b{ { 1, 2 }, { 2, 1 } };
 
         assert(!TDegreeOrder()(a, b));
     }
 
     {
-        TMonomial a{{1, 1}, {2, 1}};
-        TMonomial b{{1, 1}, {2, 2}};
+        TMonomial a{ { 1, 1 }, { 2, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 2 } };
 
         assert(TDegreeOrder()(a, b));
     }
 
     {
-        TMonomial a{{1, 1}, {2, 1}, {3, 1}};
-        TMonomial b{{1, 1}, {2, 1}};
+        TMonomial a{ { 1, 1 }, { 2, 1 }, { 3, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 1 } };
 
         assert(!TLexicographicOrder()(a, b));
     }
 
     {
-        TMonomial a{{1, 2}, {2, 1}, {3, 1}};
-        TMonomial b{{1, 1}, {2, 4}};
-        TMonomial c{{1, 1}, {2, 2}, {3, 1}};
+        TMonomial a{ { 1, 2 }, { 2, 1 }, { 3, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 4 } };
+        TMonomial c{ { 1, 1 }, { 2, 2 }, { 3, 1 } };
 
         assert(TGradedLexicographicOrder::Compare(a, b) < 0);
         assert(!TGradedLexicographicOrder()(b, c));
     }
 
     {
-        TMonomial a{{1, 0}, {2, 2}, {3, 1}};
-        TMonomial b{{1, 0}, {2, 1}, {3, 2}};
-        TMonomial c{{1, 1}, {2, 1}, {3, 2}};
+        TMonomial a{ { 1, 0 }, { 2, 2 }, { 3, 1 } };
+        TMonomial b{ { 1, 0 }, { 2, 1 }, { 3, 2 } };
+        TMonomial c{ { 1, 1 }, { 2, 1 }, { 3, 2 } };
 
         assert(TReverseLexicographicOrder::Compare(a, b) > 0);
         assert(TReverseLexicographicOrder::Compare(b, c) > 0);
     }
 
     {
-        TMonomial a{{1, 2}};
-        TMonomial b{{1, 1}, {2, 1}};
-        TMonomial c{{2, 2}};
-        TMonomial d{{1, 1}, {3, 1}};
-        TMonomial e{{2, 1}, {3, 1}};
-        TMonomial f{{3, 2}};
+        TMonomial a{ { 1, 2 } };
+        TMonomial b{ { 1, 1 }, { 2, 1 } };
+        TMonomial c{ { 2, 2 } };
+        TMonomial d{ { 1, 1 }, { 3, 1 } };
+        TMonomial e{ { 2, 1 }, { 3, 1 } };
+        TMonomial f{ { 3, 2 } };
 
         assert(TGradedReverseLexicographicOrder::Compare(a, b) > 0);
         assert(TGradedReverseLexicographicOrder::Compare(b, c) > 0);
@@ -195,61 +200,41 @@ void TestOrder() {
     std::cerr << "Order tests OK!" << std::endl;
 }
 
-void TestPolynomial() {
+void TestPolynomial()
+{
     using namespace NLibPoly;
 
     {
-        TPolynomial<size_t, TLexicographicOrder> a{
-            {{1, 2}, {3, 4}}
-        };
+        TPolynomial<size_t, TLexicographicOrder> a{ { { 1, 2 }, { 3, 4 } } };
 
-        TPolynomial<size_t, TLexicographicOrder> b{
-            {{1, 2}, {3, 4}}
-        };
+        TPolynomial<size_t, TLexicographicOrder> b{ { { 1, 2 }, { 3, 4 } } };
 
-        TPolynomial<size_t, TLexicographicOrder> c{
-            {1, {{2, 3}}}
-        };
+        TPolynomial<size_t, TLexicographicOrder> c{ { 1, { { 2, 3 } } } };
 
-        TPolynomial<size_t, TLexicographicOrder> d{
-            {{1, 2}, {3, 5}}
-        };
+        TPolynomial<size_t, TLexicographicOrder> d{ { { 1, 2 }, { 3, 5 } } };
 
         assert(a == b);
         assert(b != d);
     }
 
     {
-        TPolynomial<size_t, TLexicographicOrder> a{
-            {{1, 2}},
-            {{3, 4}}
-        };
+        TPolynomial<size_t, TLexicographicOrder> a{ { { 1, 2 } }, { { 3, 4 } } };
 
         assert(a.Size() == 2);
     }
 
     {
-        TPolynomial<size_t, TLexicographicOrder> a{
-            {2, {{1, 2}, {3, 4}}},
-            {{3, 4}, {5, 6}}
-        };
+        TPolynomial<size_t, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                    { { 3, 4 }, { 5, 6 } } };
 
-        TPolynomial<size_t, TLexicographicOrder> b{
-            {{3, 4}, {5, 6}},
-            {{7, 8}}
-        };
+        TPolynomial<size_t, TLexicographicOrder> b{ { { 3, 4 }, { 5, 6 } }, { { 7, 8 } } };
 
         TPolynomial<size_t, TLexicographicOrder> c = a + b;
-        TPolynomial<size_t, TLexicographicOrder> d{
-            {2, {{1, 2}, {3, 4}}},
-            {2, {{3, 4}, {5, 6}}},
-            {{7, 8}}
-        };
+        TPolynomial<size_t, TLexicographicOrder> d{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                    { 2, { { 3, 4 }, { 5, 6 } } },
+                                                    { { 7, 8 } } };
 
-        TPolynomial<size_t, TLexicographicOrder> e{
-            {2, {{1, 2}, {3, 4}}},
-            {{3, 4}}
-        };
+        TPolynomial<size_t, TLexicographicOrder> e{ { 2, { { 1, 2 }, { 3, 4 } } }, { { 3, 4 } } };
 
         TPolynomial<size_t, TLexicographicOrder> f = a - e;
         // TPolynomial<size_t, TLexicographicOrder> d{
