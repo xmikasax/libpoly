@@ -5,10 +5,8 @@
 namespace NLibPoly {
 
 template<size_t UModulo>
-TIntegerMod<UModulo>::TIntegerMod(TUnsignedInteger value)
-        : Value(value % UModulo)
-{
-}
+TIntegerMod<UModulo>::TIntegerMod(TUnsignedInteger value) : Value(value % UModulo)
+{}
 
 template<size_t UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator+=(const TIntegerMod& other)

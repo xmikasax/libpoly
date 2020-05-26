@@ -6,8 +6,7 @@ namespace NLibPoly {
 
 template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(UCoefficientType coefficient, TMonomial monomial)
-        : Coefficient(std::move(coefficient))
-        , Monomial(std::move(monomial))
+        : Coefficient(std::move(coefficient)), Monomial(std::move(monomial))
 {
     if (coefficient == UCoefficientType(0)) {
         Monomial = TMonomial();
@@ -17,8 +16,7 @@ TTerm<UCoefficientType>::TTerm(UCoefficientType coefficient, TMonomial monomial)
 template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(
     UCoefficientType coefficient, std::initializer_list<std::pair<TIndex, TDegree>> init_list)
-        : Coefficient(std::move(coefficient))
-        , Monomial(init_list)
+        : Coefficient(std::move(coefficient)), Monomial(init_list)
 {
     if (coefficient == UCoefficientType(0)) {
         Monomial = TMonomial();
@@ -27,10 +25,8 @@ TTerm<UCoefficientType>::TTerm(
 
 template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(std::initializer_list<std::pair<TIndex, TDegree>> init_list)
-        : Coefficient(UCoefficientType(1))
-        , Monomial(init_list)
-{
-}
+        : Coefficient(UCoefficientType(1)), Monomial(init_list)
+{}
 
 template<typename UCoefficientType>
 const TMonomial& TTerm<UCoefficientType>::GetMonomial() const
@@ -102,6 +98,7 @@ TTerm<UCoefficientType> Lcm(const TTerm<UCoefficientType>& lhs, const TTerm<UCoe
 template<typename UCoefficientType>
 std::ostream& operator<<(std::ostream& out, const TTerm<UCoefficientType>& term)
 {
+
     if (term.Coefficient == UCoefficientType(0)) {
         out << "0";
     } else {

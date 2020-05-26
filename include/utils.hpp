@@ -12,10 +12,7 @@ namespace NUtils {
 
 class TLibPolyException : public std::runtime_error {
 public:
-    TLibPolyException(const char* error)
-            : runtime_error(error)
-    {
-    }
+    TLibPolyException(const char* error) : runtime_error(error) {}
 };
 
 void Halt(const char* error);

@@ -22,6 +22,10 @@ public:
     TPolynomial(std::initializer_list<TTerm<UCoefficientType>> init_list);
 
     size_t Size() const;
+    size_t size() const
+    {
+        return Size();
+    }
 
     TPolynomial& operator+=(const TPolynomial& other);
     TPolynomial operator+(const TPolynomial& other) const

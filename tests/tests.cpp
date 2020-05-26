@@ -221,6 +221,7 @@ void TestPolynomial()
     {
         TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { { 1, 2 } }, { { 3, 4 } } };
 
+        assert(a.size() == 2);
         assert(a.Size() == 2);
     }
 
