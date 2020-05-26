@@ -1,3 +1,6 @@
+#ifndef INCLUDE_UTILS_HPP
+#define INCLUDE_UTILS_HPP
+
 #include <cstdlib>
 #include <exception>
 #include <iostream>
@@ -20,3 +23,5 @@ void Halt(const char* error);
 }
 
 }
+
+#endif // INCLUDE_UTILS_HPP

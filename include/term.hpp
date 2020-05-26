@@ -49,8 +49,15 @@ public:
         return res;
     }
 
-    bool operator==(const TTerm& other) const;
-    bool operator!=(const TTerm& other) const;
+    friend bool operator==(const TTerm& t1, const TTerm& t2)
+    {
+        return t1.Coefficient == t2.Coefficient && t1.Monomial == t2.Monomial;
+    }
+
+    friend bool operator!=(const TTerm& t1, const TTerm& t2)
+    {
+        return !(t1 == t2);
+    }
 
     template<typename T>
     friend TTerm<T> Lcm(const TTerm<T>& a, const TTerm<T>& b);

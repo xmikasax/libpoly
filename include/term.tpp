@@ -93,18 +93,6 @@ TTerm<UCoefficientType>& TTerm<UCoefficientType>::operator/=(const TTerm<UCoeffi
 }
 
 template<typename UCoefficientType>
-bool TTerm<UCoefficientType>::operator==(const TTerm<UCoefficientType>& other) const
-{
-    return Coefficient == other.Coefficient && Monomial == other.Monomial;
-}
-
-template<typename UCoefficientType>
-bool TTerm<UCoefficientType>::operator!=(const TTerm<UCoefficientType>& other) const
-{
-    return !(*this == other);
-}
-
-template<typename UCoefficientType>
 TTerm<UCoefficientType> Lcm(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
 {
     return TTerm<UCoefficientType>(

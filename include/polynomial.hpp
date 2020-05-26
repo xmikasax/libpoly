@@ -39,8 +39,15 @@ public:
         return res;
     }
 
-    bool operator==(const TPolynomial& other) const;
-    bool operator!=(const TPolynomial& other) const;
+    friend bool operator==(const TPolynomial& p1, const TPolynomial& p2)
+    {
+        return p1.Terms == p2.Terms;
+    }
+
+    friend bool operator!=(const TPolynomial& p1, const TPolynomial& p2)
+    {
+        return !(p1 == p2);
+    }
 
     template<typename UOutputCoefficientType, typename UOutputOrder>
     friend std::ostream& operator<<(std::ostream& out, const TPolynomial& polynomial);

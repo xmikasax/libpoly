@@ -3,6 +3,7 @@
 #include <cassert>
 #include <iostream>
 
+#include "integer_mod.hpp"
 #include "monomial.hpp"
 #include "order.hpp"
 #include "polynomial.hpp"
@@ -77,7 +78,7 @@ void TestTerm()
     using namespace NLibPoly;
 
     {
-        TTerm<size_t> a;
+        TTerm<TIntegerMod<5>> a;
         assert(a.GetDegree(0) == 0);
         a.SetDegree(2, 1);
         a.SetCoefficient(2);
@@ -86,26 +87,26 @@ void TestTerm()
     }
 
     {
-        TTerm<size_t> a{ 2, { { 2, 1 } } };
-        TTerm<size_t> b{ { 2, 1 } };
-        TTerm<size_t> c = a / b;
-        assert(c.GetCoefficient() == 2);
+        TTerm<TIntegerMod<5>> a{ 2, { { 2, 1 } } };
+        TTerm<TIntegerMod<5>> b{ 2, { 2, 1 } };
+        TTerm<TIntegerMod<5>> c = a / b;
+        assert(c.GetCoefficient() == 1);
         assert(c.GetDegree(2) == 0);
     }
 
     {
-        TTerm<size_t> a{ 2, { { 2, 1 } } };
-        TTerm<size_t> b{ { 2, 1 } };
-        TTerm<size_t> d = b * a;
+        TTerm<TIntegerMod<5>> a{ 2, { { 2, 1 } } };
+        TTerm<TIntegerMod<5>> b{ { 2, 1 } };
+        TTerm<TIntegerMod<5>> d = b * a;
         assert(d.GetDegree(2) == 2);
         assert(d.GetCoefficient() == 2);
     }
 
     {
-        TTerm<size_t> a{ 2, { { 2, 2 } } };
-        TTerm<size_t> b{ { 2, 1 } };
+        TTerm<TIntegerMod<5>> a{ 2, { { 2, 2 } } };
+        TTerm<TIntegerMod<5>> b{ { 2, 1 } };
         b.SetDegree(3, 1);
-        TTerm<size_t> c = Lcm(a, b);
+        TTerm<TIntegerMod<5>> c = Lcm(a, b);
 
         assert(c.GetDegree(2) == 2);
         assert(c.GetDegree(3) == 1);
@@ -205,45 +206,37 @@ void TestPolynomial()
     using namespace NLibPoly;
 
     {
-        TPolynomial<size_t, TLexicographicOrder> a{ { { 1, 2 }, { 3, 4 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { { 1, 2 }, { 3, 4 } } };
 
-        TPolynomial<size_t, TLexicographicOrder> b{ { { 1, 2 }, { 3, 4 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { { 1, 2 }, { 3, 4 } } };
 
-        TPolynomial<size_t, TLexicographicOrder> c{ { 1, { { 2, 3 } } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c{ { 1, { { 2, 3 } } } };
 
-        TPolynomial<size_t, TLexicographicOrder> d{ { { 1, 2 }, { 3, 5 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> d{ { { 1, 2 }, { 3, 5 } } };
 
         assert(a == b);
         assert(b != d);
     }
 
     {
-        TPolynomial<size_t, TLexicographicOrder> a{ { { 1, 2 } }, { { 3, 4 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { { 1, 2 } }, { { 3, 4 } } };
 
         assert(a.Size() == 2);
     }
 
     {
-        TPolynomial<size_t, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
-                                                    { { 3, 4 }, { 5, 6 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
 
-        TPolynomial<size_t, TLexicographicOrder> b{ { { 3, 4 }, { 5, 6 } }, { { 7, 8 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { { 3, 4 }, { 5, 6 } }, { { 7, 8 } } };
 
-        TPolynomial<size_t, TLexicographicOrder> c = a + b;
-        TPolynomial<size_t, TLexicographicOrder> d{ { 2, { { 1, 2 }, { 3, 4 } } },
-                                                    { 2, { { 3, 4 }, { 5, 6 } } },
-                                                    { { 7, 8 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c = a + b;
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> d{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { 2, { { 3, 4 }, { 5, 6 } } },
+                                                            { { 7, 8 } } };
 
-        TPolynomial<size_t, TLexicographicOrder> e{ { 2, { { 1, 2 }, { 3, 4 } } }, { { 3, 4 } } };
-
-        TPolynomial<size_t, TLexicographicOrder> f = a - e;
-        // TPolynomial<size_t, TLexicographicOrder> d{
-        //     {2, {{1, 2}, {3, 4}}},
-        //     {2, {{3, 4}, {5, 6}}},
-        //     {{7, 8}}
-        // };
-
-        std::cout << f << std::endl;
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> e{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 } } };
 
         assert(c == d);
     }

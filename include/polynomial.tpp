@@ -63,18 +63,6 @@ TPolynomial<UCoefficientType, UOrder>::operator-=(const TPolynomial& other)
 }
 
 template<typename UCoefficientType, typename UOrder>
-bool TPolynomial<UCoefficientType, UOrder>::operator==(const TPolynomial& other) const
-{
-    return Terms == other.Terms;
-}
-
-template<typename UCoefficientType, typename UOrder>
-bool TPolynomial<UCoefficientType, UOrder>::operator!=(const TPolynomial& other) const
-{
-    return !(*this == other);
-}
-
-template<typename UCoefficientType, typename UOrder>
 std::ostream& operator<<(std::ostream& out, const TPolynomial<UCoefficientType, UOrder>& polynomial)
 {
     if (polynomial.begin() == polynomial.end()) {
