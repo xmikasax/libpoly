@@ -9,6 +9,12 @@ TIntegerMod<UModulo>::TIntegerMod(TUnsignedInteger value) : Value(value % UModul
 {}
 
 template<size_t UModulo>
+TIntegerMod<UModulo> TIntegerMod<UModulo>::operator-() const
+{
+    return TIntegerMod((-Value + UModulo) % UModulo);
+}
+
+template<size_t UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator+=(const TIntegerMod& other)
 {
     Value = (Value + other.Value) % UModulo;
@@ -53,6 +59,13 @@ TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator/=(const TIntegerMod& other)
 
     *this *= Power(other, UModulo - 2);
     return *this;
+}
+
+template<size_t UOutputModulo>
+std::ostream& operator<<(std::ostream& out, const TIntegerMod<UOutputModulo>& im)
+{
+    out << im.Value;
+    return out;
 }
 
 }

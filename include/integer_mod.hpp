@@ -5,6 +5,7 @@
 
 namespace NLibPoly {
 
+// TODO: enable if UModulo > 1
 template<size_t UModulo>
 class TIntegerMod {
 public:
@@ -13,6 +14,8 @@ public:
 public:
     TIntegerMod() = default;
     TIntegerMod(TUnsignedInteger value);
+
+    TIntegerMod operator-() const;
 
     TIntegerMod& operator+=(const TIntegerMod& other);
     friend TIntegerMod operator+(const TIntegerMod& im1, const TIntegerMod& im2)
@@ -55,6 +58,9 @@ public:
     {
         return !(im1 == im2);
     }
+
+    template<size_t UOutputModulo>
+    friend std::ostream& operator<<(std::ostream& out, const TIntegerMod<UOutputModulo>& im);
 
 private:
     TUnsignedInteger Value = TUnsignedInteger(0);

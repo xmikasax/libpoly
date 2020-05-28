@@ -236,10 +236,23 @@ void TestPolynomial()
                                                             { 2, { { 3, 4 }, { 5, 6 } } },
                                                             { { 7, 8 } } };
 
-        TPolynomial<TIntegerMod<5>, TLexicographicOrder> e{ { 2, { { 1, 2 }, { 3, 4 } } },
-                                                            { { 3, 4 } } };
-
         assert(c == d);
+        assert(c - b == a);
+        assert(d - a == b);
+    }
+
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
+
+        TTerm<TIntegerMod<5>> b{ { 3, 4 }, { 5, 6 } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c{
+            { 2, { { 1, 2 }, { 3, 4 } } },
+        };
+
+        assert(a - b == c);
+        assert(a - b + b == a);
     }
 
     std::cerr << "Polynomial tests OK!" << std::endl;

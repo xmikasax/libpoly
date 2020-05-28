@@ -103,9 +103,9 @@ std::ostream& operator<<(std::ostream& out, const TTerm<UCoefficientType>& term)
         out << "0";
     } else {
         if (term.Coefficient == UCoefficientType(1)) {
-            out << term.Monomial;
+            out << term.GetMonomial();
         } else {
-            out << term.Coefficient << " " << term.Monomial;
+            out << term.GetCoefficient() << " " << term.GetMonomial();
         }
     }
 

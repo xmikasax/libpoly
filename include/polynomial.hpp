@@ -28,18 +28,44 @@ public:
     }
 
     TPolynomial& operator+=(const TPolynomial& other);
-    TPolynomial operator+(const TPolynomial& other) const
+    friend TPolynomial operator+(const TPolynomial& p1, const TPolynomial& p2)
     {
-        TPolynomial res(*this);
-        res += other;
+        TPolynomial res(p1);
+        res += p2;
+        return res;
+    }
+    TPolynomial& operator+=(const TTerm<UCoefficientType>& other);
+    friend TPolynomial operator+(const TPolynomial& p, const TTerm<UCoefficientType>& t)
+    {
+        TPolynomial res(p);
+        res += t;
+        return res;
+    }
+    friend TPolynomial operator+(const TTerm<UCoefficientType>& t, const TPolynomial& p)
+    {
+        TPolynomial res(p);
+        res += t;
         return res;
     }
 
     TPolynomial& operator-=(const TPolynomial& other);
-    TPolynomial operator-(const TPolynomial& other) const
+    friend TPolynomial operator-(const TPolynomial& p1, const TPolynomial& p2)
     {
-        TPolynomial res(*this);
-        res -= other;
+        TPolynomial res(p1);
+        res -= p2;
+        return res;
+    }
+    TPolynomial& operator-=(const TTerm<UCoefficientType>& other);
+    friend TPolynomial operator-(const TPolynomial& p, const TTerm<UCoefficientType>& t)
+    {
+        TPolynomial res(p);
+        res -= t;
+        return res;
+    }
+    friend TPolynomial operator-(const TTerm<UCoefficientType>& t, const TPolynomial& p)
+    {
+        TPolynomial res(p);
+        res -= t;
         return res;
     }
 
@@ -52,9 +78,6 @@ public:
     {
         return !(p1 == p2);
     }
-
-    template<typename UOutputCoefficientType, typename UOutputOrder>
-    friend std::ostream& operator<<(std::ostream& out, const TPolynomial& polynomial);
 
     TIterator begin();
     TIterator end();

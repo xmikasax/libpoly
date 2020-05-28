@@ -34,18 +34,18 @@ public:
     void SetDegree(TIndex index, TDegree degree);
 
     TTerm& operator*=(const TTerm& other);
-    TTerm operator*(const TTerm& other) const
+    friend TTerm operator*(const TTerm& t1, const TTerm& t2)
     {
-        TTerm res(*this);
-        res *= other;
+        TTerm res(t1);
+        res *= t2;
         return res;
     }
 
     TTerm& operator/=(const TTerm& other);
-    TTerm operator/(const TTerm& other) const
+    friend TTerm operator/(const TTerm& t1, const TTerm& t2)
     {
-        TTerm res(*this);
-        res /= other;
+        TTerm res(t1);
+        res /= t2;
         return res;
     }
 
@@ -61,9 +61,6 @@ public:
 
     template<typename T>
     friend TTerm<T> Lcm(const TTerm<T>& a, const TTerm<T>& b);
-
-    template<typename UOutputCoefficientType>
-    friend std::ostream& operator<<(std::ostream& out, const TTerm<UOutputCoefficientType>& term);
 
 private:
     UCoefficientType Coefficient = UCoefficientType(0);
