@@ -1,3 +1,6 @@
+#ifndef INCLUDE_ORDER_TPP
+#define INCLUDE_ORDER_TPP
+
 #include "order.hpp"
 
 #include "monomial.hpp"
@@ -133,3 +136,5 @@ int TCombineOrder<UOrder>::CompareInternal(const TMonomial& m1, const TMonomial&
 }
 
 }
+
+#endif // INCLUDE_ORDER_TPP

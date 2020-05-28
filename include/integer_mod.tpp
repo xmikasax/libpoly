@@ -1,3 +1,6 @@
+#ifndef INCLUDE_INTEGER_MOD_TPP
+#define INCLUDE_INTEGER_MOD_TPP
+
 #include "integer_mod.hpp"
 
 #include "utils.hpp"
@@ -69,3 +72,5 @@ std::ostream& operator<<(std::ostream& out, const TIntegerMod<UOutputModulo>& im
 }
 
 }
+
+#endif // INCLUDE_INTEGER_MOD_TPP

@@ -1,3 +1,6 @@
+#ifndef INCLUDE_TERM_TPP
+#define INCLUDE_TERM_TPP
+
 #include "term.hpp"
 
 #include <iostream>
@@ -111,5 +114,6 @@ std::ostream& operator<<(std::ostream& out, const TTerm<UCoefficientType>& term)
 
     return out;
 }
-
 }
+
+#endif // INCLUDE_TERM_TPP

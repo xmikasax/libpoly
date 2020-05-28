@@ -1,3 +1,6 @@
+#ifndef INCLUDE_POLYNOMIAL_TPP
+#define INCLUDE_POLYNOMIAL_TPP
+
 #include "polynomial.hpp"
 
 #include <iostream>
@@ -205,3 +208,5 @@ TPolynomial<UCoefficientType, UOrder>::TPolynomial::crend() const
 }
 
 }
+
+#endif // INCLUDE_POLYNOMIAL_TPP
