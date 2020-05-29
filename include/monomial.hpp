@@ -62,4 +62,6 @@ bool operator!=(const TMonomial& m1, const TMonomial& m2);
 
 }
 
+#include "monomial.tpp"
+
 #endif // INCLUDE_MONOMIAL_HPP

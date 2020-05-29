@@ -21,4 +21,6 @@ void Halt(const char* error);
 
 }
 
+#include "utils.tpp"
+
 #endif // INCLUDE_UTILS_HPP
