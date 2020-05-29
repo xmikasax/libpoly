@@ -48,17 +48,7 @@ template<typename UCoefficientType, typename UOrder>
 TPolynomial<UCoefficientType, UOrder>&
 TPolynomial<UCoefficientType, UOrder>::operator+=(const TTerm<UCoefficientType>& other)
 {
-    auto term_iterator = Terms.lower_bound(other);
-    if (UOrder::Compare(*term_iterator, other)) {
-        Terms.insert(term_iterator, other);
-    } else {
-        auto value = std::move(*term_iterator);
-        value.SetCoefficient(value.GetCoefficient() + other.GetCoefficient());
-        auto next_iterator = Terms.erase(term_iterator);
-        if (value.GetCoefficient() != UCoefficientType(0)) {
-            Terms.insert(next_iterator, std::move(value));
-        }
-    }
+    *this += TPolynomial({ other });
 
     return *this;
 }
@@ -88,17 +78,7 @@ template<typename UCoefficientType, typename UOrder>
 TPolynomial<UCoefficientType, UOrder>&
 TPolynomial<UCoefficientType, UOrder>::operator-=(const TTerm<UCoefficientType>& other)
 {
-    auto term_iterator = Terms.lower_bound(other);
-    if (UOrder::Compare(*term_iterator, other)) {
-        Terms.insert(term_iterator, { -other.GetCoefficient(), other.GetMonomial() });
-    } else {
-        auto value = std::move(*term_iterator);
-        value.SetCoefficient(value.GetCoefficient() - other.GetCoefficient());
-        auto next_iterator = Terms.erase(term_iterator);
-        if (value.GetCoefficient() != UCoefficientType(0)) {
-            Terms.insert(next_iterator, std::move(value));
-        }
-    }
+    *this -= TPolynomial({ other });
 
     return *this;
 }
