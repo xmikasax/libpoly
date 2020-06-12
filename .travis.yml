@@ -1,7 +1,10 @@
 language: cpp
-compiler: gcc
-dist: bionic
-os: linux
+compiler:
+  - gcc
+  - clang
+os:
+  - linux
+  - osx
 
 script:
   - ./build.sh
