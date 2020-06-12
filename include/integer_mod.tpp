@@ -30,7 +30,7 @@ TIntegerMod<UModulo> operator+(const TIntegerMod<UModulo>& lhs, const TIntegerMo
     TIntegerMod integer_mod(lhs);
     integer_mod += rhs;
     return integer_mod;
-};
+}
 
 template<size_t UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator-=(const TIntegerMod& other)
@@ -45,7 +45,7 @@ TIntegerMod<UModulo> operator-(const TIntegerMod<UModulo>& lhs, const TIntegerMo
     TIntegerMod integer_mod(lhs);
     integer_mod -= rhs;
     return integer_mod;
-};
+}
 
 template<size_t UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator*=(const TIntegerMod& other)
@@ -60,7 +60,7 @@ TIntegerMod<UModulo> operator*(const TIntegerMod<UModulo>& lhs, const TIntegerMo
     TIntegerMod integer_mod(lhs);
     integer_mod *= rhs;
     return integer_mod;
-};
+}
 
 namespace {
 template<size_t UModulo>
@@ -94,7 +94,7 @@ TIntegerMod<UModulo> operator/(const TIntegerMod<UModulo>& lhs, const TIntegerMo
     TIntegerMod integer_mod(lhs);
     integer_mod /= rhs;
     return integer_mod;
-};
+}
 
 template<size_t UOutputModulo>
 std::ostream& operator<<(std::ostream& out, const TIntegerMod<UOutputModulo>& im)
