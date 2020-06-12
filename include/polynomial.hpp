@@ -28,55 +28,18 @@ public:
     }
 
     TPolynomial& operator+=(const TPolynomial& other);
-    friend TPolynomial operator+(const TPolynomial& p1, const TPolynomial& p2)
-    {
-        TPolynomial res(p1);
-        res += p2;
-        return res;
-    }
     TPolynomial& operator+=(const TTerm<UCoefficientType>& other);
-    friend TPolynomial operator+(const TPolynomial& p, const TTerm<UCoefficientType>& t)
-    {
-        TPolynomial res(p);
-        res += t;
-        return res;
-    }
-    friend TPolynomial operator+(const TTerm<UCoefficientType>& t, const TPolynomial& p)
-    {
-        TPolynomial res(p);
-        res += t;
-        return res;
-    }
-
     TPolynomial& operator-=(const TPolynomial& other);
-    friend TPolynomial operator-(const TPolynomial& p1, const TPolynomial& p2)
-    {
-        TPolynomial res(p1);
-        res -= p2;
-        return res;
-    }
     TPolynomial& operator-=(const TTerm<UCoefficientType>& other);
-    friend TPolynomial operator-(const TPolynomial& p, const TTerm<UCoefficientType>& t)
+
+    friend bool operator==(const TPolynomial& lhs, const TPolynomial& rhs)
     {
-        TPolynomial res(p);
-        res -= t;
-        return res;
-    }
-    friend TPolynomial operator-(const TTerm<UCoefficientType>& t, const TPolynomial& p)
-    {
-        TPolynomial res(p);
-        res -= t;
-        return res;
+        return lhs.Terms == rhs.Terms;
     }
 
-    friend bool operator==(const TPolynomial& p1, const TPolynomial& p2)
+    friend bool operator!=(const TPolynomial& lhs, const TPolynomial& rhs)
     {
-        return p1.Terms == p2.Terms;
-    }
-
-    friend bool operator!=(const TPolynomial& p1, const TPolynomial& p2)
-    {
-        return !(p1 == p2);
+        return !(lhs == rhs);
     }
 
     TIterator begin();
@@ -95,6 +58,32 @@ public:
 private:
     TContainer Terms;
 };
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder> operator+(
+    const TPolynomial<UCoefficientType, UOrder>& lhs,
+    const TPolynomial<UCoefficientType, UOrder>& rhs);
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder>
+operator+(const TPolynomial<UCoefficientType, UOrder>& lhs, const TTerm<UCoefficientType>& rhs);
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder>
+operator+(const TTerm<UCoefficientType>& lhs, const TPolynomial<UCoefficientType, UOrder>& rhs);
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder> operator-(
+    const TPolynomial<UCoefficientType, UOrder>& lhs,
+    const TPolynomial<UCoefficientType, UOrder>& rhs);
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder>
+operator-(const TPolynomial<UCoefficientType, UOrder>& lhs, const TTerm<UCoefficientType>& rhs);
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder>
+operator-(const TTerm<UCoefficientType>& lhs, const TPolynomial<UCoefficientType, UOrder>& rhs);
 
 }
 

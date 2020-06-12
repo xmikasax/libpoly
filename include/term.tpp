@@ -79,6 +79,15 @@ TTerm<UCoefficientType>& TTerm<UCoefficientType>::operator*=(const TTerm<UCoeffi
 }
 
 template<typename UCoefficientType>
+TTerm<UCoefficientType>
+operator*(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
+{
+    TTerm res(lhs);
+    res *= rhs;
+    return res;
+}
+
+template<typename UCoefficientType>
 TTerm<UCoefficientType>& TTerm<UCoefficientType>::operator/=(const TTerm<UCoefficientType>& other)
 {
     Monomial /= other.Monomial;
@@ -92,10 +101,32 @@ TTerm<UCoefficientType>& TTerm<UCoefficientType>::operator/=(const TTerm<UCoeffi
 }
 
 template<typename UCoefficientType>
+TTerm<UCoefficientType>
+operator/(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
+{
+    TTerm res(lhs);
+    res /= rhs;
+    return res;
+}
+
+template<typename UCoefficientType>
+bool operator==(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
+{
+    return lhs.GetCoefficient() == rhs.GetCoefficient() && lhs.GetMonomial() == rhs.GetMonomial();
+}
+
+template<typename UCoefficientType>
 TTerm<UCoefficientType> Lcm(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
 {
     return TTerm<UCoefficientType>(
-        lhs.Coefficient * rhs.Coefficient, Lcm(lhs.Monomial, rhs.Monomial));
+        lhs.GetCoefficient() * rhs.GetCoefficient(), Lcm(lhs.GetMonomial(), rhs.GetMonomial()));
+}
+
+template<typename UCoefficientType>
+bool IsDivisibleBy(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
+{
+    return IsDivisibleBy(lhs.GetMonomial(), rhs.GetMonomial())
+           && rhs.GetCoefficient() != UCoefficientType(0);
 }
 
 template<typename UCoefficientType>

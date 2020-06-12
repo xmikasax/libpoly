@@ -25,6 +25,14 @@ TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator+=(const TIntegerMod& other)
 }
 
 template<size_t UModulo>
+TIntegerMod<UModulo> operator+(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs)
+{
+    TIntegerMod integer_mod(lhs);
+    integer_mod += rhs;
+    return integer_mod;
+};
+
+template<size_t UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator-=(const TIntegerMod& other)
 {
     Value = ((Value - other.Value) % UModulo + UModulo) % UModulo;
@@ -32,11 +40,27 @@ TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator-=(const TIntegerMod& other)
 }
 
 template<size_t UModulo>
+TIntegerMod<UModulo> operator-(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs)
+{
+    TIntegerMod integer_mod(lhs);
+    integer_mod -= rhs;
+    return integer_mod;
+};
+
+template<size_t UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator*=(const TIntegerMod& other)
 {
     Value = (Value * other.Value) % UModulo;
     return *this;
 }
+
+template<size_t UModulo>
+TIntegerMod<UModulo> operator*(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs)
+{
+    TIntegerMod integer_mod(lhs);
+    integer_mod *= rhs;
+    return integer_mod;
+};
 
 namespace {
 template<size_t UModulo>
@@ -63,6 +87,14 @@ TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator/=(const TIntegerMod& other)
     *this *= Power(other, UModulo - 2);
     return *this;
 }
+
+template<size_t UModulo>
+TIntegerMod<UModulo> operator/(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs)
+{
+    TIntegerMod integer_mod(lhs);
+    integer_mod /= rhs;
+    return integer_mod;
+};
 
 template<size_t UOutputModulo>
 std::ostream& operator<<(std::ostream& out, const TIntegerMod<UOutputModulo>& im)

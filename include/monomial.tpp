@@ -13,18 +13,18 @@ TMonomial::TMonomial(TIndex index, TDegree degree)
 
 TMonomial::TMonomial(std::initializer_list<std::pair<TIndex, TDegree>> init_list)
 {
-    for (const auto& it : init_list) {
-        SetDegree(it.first, it.second);
+    for (const auto& variable : init_list) {
+        SetDegree(variable.first, variable.second);
     }
 }
 
 TMonomial::TDegree TMonomial::GetDegree(TIndex index) const
 {
-    const auto& it = Variables.find(index);
-    if (it == Variables.end()) {
+    const auto& variable_iterator = Variables.find(index);
+    if (variable_iterator == Variables.end()) {
         return TDegree(0);
     }
-    return it->second;
+    return variable_iterator->second;
 }
 
 void TMonomial::SetDegree(TIndex index, TDegree degree)
@@ -39,8 +39,8 @@ void TMonomial::SetDegree(TIndex index, TDegree degree)
 // No need to check for zero degree
 TMonomial& TMonomial::operator*=(const TMonomial& other)
 {
-    for (const auto& it : other.Variables) {
-        Variables[it.first] += it.second;
+    for (const auto& variable : other.Variables) {
+        Variables[variable.first] += variable.second;
     }
     return *this;
 }
@@ -54,12 +54,12 @@ TMonomial operator*(const TMonomial& lhs, const TMonomial& rhs)
 
 TMonomial& TMonomial::operator/=(const TMonomial& other)
 {
-    for (const auto& it : other.Variables) {
-        TDegree degree = GetDegree(it.first);
-        if (degree < it.second) {
+    for (const auto& variable : other.Variables) {
+        TDegree degree = GetDegree(variable.first);
+        if (degree < variable.second) {
             NUtils::Halt("Underflow while dividing monomials");
         }
-        SetDegree(it.first, degree - it.second);
+        SetDegree(variable.first, degree - variable.second);
     }
     return *this;
 }
@@ -84,10 +84,21 @@ bool operator!=(const TMonomial& lhs, const TMonomial& rhs)
 TMonomial Lcm(const TMonomial& lhs, const TMonomial& rhs)
 {
     TMonomial res(lhs);
-    for (const auto& it : rhs.Variables) {
-        res.SetDegree(it.first, std::max(res.GetDegree(it.first), it.second));
+    for (const auto& variable : rhs.Variables) {
+        res.SetDegree(variable.first, std::max(res.GetDegree(variable.first), variable.second));
     }
     return res;
+}
+
+bool IsDivisibleBy(const TMonomial& lhs, const TMonomial& rhs)
+{
+    for (const auto& variable : rhs) {
+        if (lhs.GetDegree(variable.first) < variable.second) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 std::ostream& operator<<(std::ostream& out, const TMonomial& monomial)
@@ -96,13 +107,13 @@ std::ostream& operator<<(std::ostream& out, const TMonomial& monomial)
         out << "0";
     } else {
         bool first = true;
-        for (const auto& it : monomial) {
+        for (const auto& variable : monomial) {
             if (!first) {
                 out << " ";
             } else {
                 first = false;
             }
-            out << "x_{" << it.first << "}^{" << it.second << "}";
+            out << "x_{" << variable.first << "}^{" << variable.second << "}";
         }
     }
 

@@ -34,38 +34,32 @@ public:
     void SetDegree(TIndex index, TDegree degree);
 
     TTerm& operator*=(const TTerm& other);
-    friend TTerm operator*(const TTerm& t1, const TTerm& t2)
-    {
-        TTerm res(t1);
-        res *= t2;
-        return res;
-    }
-
     TTerm& operator/=(const TTerm& other);
-    friend TTerm operator/(const TTerm& t1, const TTerm& t2)
-    {
-        TTerm res(t1);
-        res /= t2;
-        return res;
-    }
-
-    friend bool operator==(const TTerm& t1, const TTerm& t2)
-    {
-        return t1.Coefficient == t2.Coefficient && t1.Monomial == t2.Monomial;
-    }
-
-    friend bool operator!=(const TTerm& t1, const TTerm& t2)
-    {
-        return !(t1 == t2);
-    }
-
-    template<typename T>
-    friend TTerm<T> Lcm(const TTerm<T>& a, const TTerm<T>& b);
 
 private:
     UCoefficientType Coefficient = UCoefficientType(0);
     TMonomial Monomial;
 };
+
+template<typename UCoefficientType>
+TTerm<UCoefficientType>
+operator*(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs);
+
+template<typename UCoefficientType>
+TTerm<UCoefficientType>
+operator/(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs);
+
+template<typename UCoefficientType>
+bool operator==(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs);
+
+template<typename UCoefficientType>
+bool operator==(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs);
+
+template<typename T>
+TTerm<T> Lcm(const TTerm<T>& lhs, const TTerm<T>& rhs);
+
+template<typename T>
+bool IsDivisibleBy(const TTerm<T>& lhs, const TTerm<T>& rhs);
 
 }
 

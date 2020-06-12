@@ -16,47 +16,19 @@ public:
     TIntegerMod(TUnsignedInteger value);
 
     TIntegerMod operator-() const;
-
     TIntegerMod& operator+=(const TIntegerMod& other);
-    friend TIntegerMod operator+(const TIntegerMod& im1, const TIntegerMod& im2)
-    {
-        TIntegerMod integer_mod(im1);
-        integer_mod += im2;
-        return integer_mod;
-    };
-
     TIntegerMod& operator-=(const TIntegerMod& other);
-    friend TIntegerMod operator-(const TIntegerMod& im1, const TIntegerMod& im2)
-    {
-        TIntegerMod integer_mod(im1);
-        integer_mod -= im2;
-        return integer_mod;
-    };
-
     TIntegerMod& operator*=(const TIntegerMod& other);
-    friend TIntegerMod operator*(const TIntegerMod& im1, const TIntegerMod& im2)
-    {
-        TIntegerMod integer_mod(im1);
-        integer_mod *= im2;
-        return integer_mod;
-    };
-
     TIntegerMod& operator/=(const TIntegerMod& other);
-    friend TIntegerMod operator/(const TIntegerMod& im1, const TIntegerMod& im2)
-    {
-        TIntegerMod integer_mod(im1);
-        integer_mod /= im2;
-        return integer_mod;
-    };
 
-    friend bool operator==(const TIntegerMod& im1, const TIntegerMod& im2)
+    friend bool operator==(const TIntegerMod& lhs, const TIntegerMod& rhs)
     {
-        return im1.Value == im2.Value;
+        return lhs.Value == rhs.Value;
     }
 
-    friend bool operator!=(const TIntegerMod& im1, const TIntegerMod& im2)
+    friend bool operator!=(const TIntegerMod& lhs, const TIntegerMod& rhs)
     {
-        return !(im1 == im2);
+        return !(lhs == rhs);
     }
 
     template<size_t UOutputModulo>
@@ -65,6 +37,18 @@ public:
 private:
     TUnsignedInteger Value = TUnsignedInteger(0);
 };
+
+template<size_t UModulo>
+TIntegerMod<UModulo> operator-(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs);
+
+template<size_t UModulo>
+TIntegerMod<UModulo> operator+(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs);
+
+template<size_t UModulo>
+TIntegerMod<UModulo> operator*(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs);
+
+template<size_t UModulo>
+TIntegerMod<UModulo> operator/(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs);
 
 }
 

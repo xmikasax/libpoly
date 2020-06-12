@@ -3,6 +3,7 @@
 #include <cassert>
 #include <iostream>
 
+#include "algorithms.hpp"
 #include "integer_mod.hpp"
 #include "monomial.hpp"
 #include "order.hpp"
@@ -16,6 +17,7 @@ void TestAll()
     TestTerm();
     TestOrder();
     TestPolynomial();
+    TestAlgorithms();
 }
 
 void TestMonomial()
@@ -68,6 +70,16 @@ void TestMonomial()
         TMonomial b{ { 2, 1 } };
         assert(b * b == a);
         assert(b != a);
+    }
+
+    {
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 } };
+        TMonomial c{ { 2, 1 }, { 3, 1 } };
+
+        assert(IsDivisibleBy(a, b));
+        assert(IsDivisibleBy(c, b));
+        assert(!IsDivisibleBy(b, c));
     }
 
     std::cerr << "Monomial tests OK!" << std::endl;
@@ -256,4 +268,21 @@ void TestPolynomial()
     }
 
     std::cerr << "Polynomial tests OK!" << std::endl;
+}
+
+void TestAlgorithms()
+{
+    using namespace NLibPoly;
+
+    {
+        // TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+        //                                                     { { 3, 4 }, { 5, 6 } } };
+
+        // TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { 2, { { 1, 2 }, { 3, 4 } } },
+        //                                                     { { 3, 4 }, { 5, 6 } } };
+
+        // TPolynomial<TIntegerMod<5>, TLexicographicOrder> c;
+
+        // assert(Reduce(a, b) == c);
+    }
 }
