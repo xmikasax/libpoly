@@ -267,6 +267,17 @@ void TestPolynomial()
         assert(a - b + b == a);
     }
 
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { { 1, 2 } }, { { 3, 4 } } };
+
+        TTerm<TIntegerMod<5>> b{ 2, { 3, 4 } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { 2, { 3, 8 } } };
+
+        assert(a * b == c);
+    }
+
     std::cerr << "Polynomial tests OK!" << std::endl;
 }
 
@@ -275,14 +286,19 @@ void TestAlgorithms()
     using namespace NLibPoly;
 
     {
-        // TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
-        //                                                     { { 3, 4 }, { 5, 6 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
 
-        // TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { 2, { { 1, 2 }, { 3, 4 } } },
-        //                                                     { { 3, 4 }, { 5, 6 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
 
-        // TPolynomial<TIntegerMod<5>, TLexicographicOrder> c;
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c{ { { 5, 6 } }, { { 7, 8 } } };
 
-        // assert(Reduce(a, b) == c);
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> d;
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> e{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { 4, { { 3, 4 }, { 7, 8 } } } };
+
+        assert(Reduce(a, b) == d);
+        assert(Reduce(a, c) == e);
     }
 }

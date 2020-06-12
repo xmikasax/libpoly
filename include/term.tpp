@@ -125,18 +125,17 @@ TTerm<UCoefficientType> Lcm(const TTerm<UCoefficientType>& lhs, const TTerm<UCoe
 template<typename UCoefficientType>
 bool IsDivisibleBy(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
 {
-    return IsDivisibleBy(lhs.GetMonomial(), rhs.GetMonomial())
-           && rhs.GetCoefficient() != UCoefficientType(0);
+    return rhs.GetCoefficient() != UCoefficientType(0) &&  IsDivisibleBy(lhs.GetMonomial(), rhs.GetMonomial());
 }
 
 template<typename UCoefficientType>
 std::ostream& operator<<(std::ostream& out, const TTerm<UCoefficientType>& term)
 {
 
-    if (term.Coefficient == UCoefficientType(0)) {
+    if (term.GetCoefficient() == UCoefficientType(0)) {
         out << "0";
     } else {
-        if (term.Coefficient == UCoefficientType(1)) {
+        if (term.GetCoefficient() == UCoefficientType(1)) {
             out << term.GetMonomial();
         } else {
             out << term.GetCoefficient() << " " << term.GetMonomial();

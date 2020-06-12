@@ -1,14 +1,20 @@
 #include "algorithms.hpp"
 
+#include "utils.hpp"
+
 namespace NLibPoly {
 
 template<typename UCoefficientType, typename UOrder>
 TPolynomial<UCoefficientType, UOrder>
-Reduce(TPolynomial<UCoefficientType, UOrder> p1, TPolynomial<UCoefficientType, UOrder> p2)
+Reduce(TPolynomial<UCoefficientType, UOrder> lhs, TPolynomial<UCoefficientType, UOrder> rhs)
 {
-    return p1 + p2;
-    // for (auto term_iterator = p1.rbegin(); term_iterator != p1.rend(); ++term_iterator) {
-    // }
+    for (auto term_iterator = lhs.rbegin(); term_iterator != lhs.rend(); ++term_iterator) {
+        if (IsDivisibleBy(*term_iterator, rhs.Leader())) {
+            return lhs - rhs * (*term_iterator / rhs.Leader());
+        }
+    }
+
+    NUtils::Halt("Polynomial is irreducible");
 }
 
 }

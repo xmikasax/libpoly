@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include "utils.hpp"
+
 namespace NLibPoly {
 
 template<typename UCoefficientType, typename UOrder>
@@ -140,6 +142,30 @@ operator-(const TTerm<UCoefficientType>& lhs, const TPolynomial<UCoefficientType
 }
 
 template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder>&
+TPolynomial<UCoefficientType, UOrder>::operator*=(const TTerm<UCoefficientType>& other)
+{
+    TPolynomial res;
+
+    for (const auto& term : *this) {
+        res += term * other;
+    }
+
+    *this = std::move(res);
+
+    return *this;
+}
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder>
+operator*(const TPolynomial<UCoefficientType, UOrder>& lhs, const TTerm<UCoefficientType>& rhs)
+{
+    TPolynomial res(lhs);
+    res *= rhs;
+    return res;
+}
+
+template<typename UCoefficientType, typename UOrder>
 std::ostream& operator<<(std::ostream& out, const TPolynomial<UCoefficientType, UOrder>& polynomial)
 {
     if (polynomial.begin() == polynomial.end()) {
@@ -158,6 +184,29 @@ std::ostream& operator<<(std::ostream& out, const TPolynomial<UCoefficientType, 
     }
 
     return out;
+}
+
+template<typename UCoefficientType, typename UOrder>
+bool IsReducibleBy(
+    const TPolynomial<UCoefficientType, UOrder>& lhs,
+    const TPolynomial<UCoefficientType, UOrder>& rhs)
+{
+    for (const auto& term : lhs) {
+        if (IsDivisibleBy(term, rhs.Leader())) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+template<typename UCoefficientType, typename UOrder>
+const TTerm<UCoefficientType>& TPolynomial<UCoefficientType, UOrder>::Leader() const
+{
+    if (Size() <= 0) {
+        NUtils::Halt("Polynomial is zero");
+    }
+    return *Terms.rbegin();
 }
 
 template<typename UCoefficientType, typename UOrder>

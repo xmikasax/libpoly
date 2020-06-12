@@ -31,6 +31,7 @@ public:
     TPolynomial& operator+=(const TTerm<UCoefficientType>& other);
     TPolynomial& operator-=(const TPolynomial& other);
     TPolynomial& operator-=(const TTerm<UCoefficientType>& other);
+    TPolynomial& operator*=(const TTerm<UCoefficientType>& other);
 
     friend bool operator==(const TPolynomial& lhs, const TPolynomial& rhs)
     {
@@ -41,6 +42,8 @@ public:
     {
         return !(lhs == rhs);
     }
+
+    const TTerm<UCoefficientType>& Leader() const;
 
     TIterator begin();
     TIterator end();
@@ -84,6 +87,15 @@ operator-(const TPolynomial<UCoefficientType, UOrder>& lhs, const TTerm<UCoeffic
 template<typename UCoefficientType, typename UOrder>
 TPolynomial<UCoefficientType, UOrder>
 operator-(const TTerm<UCoefficientType>& lhs, const TPolynomial<UCoefficientType, UOrder>& rhs);
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomial<UCoefficientType, UOrder>
+operator*(const TPolynomial<UCoefficientType, UOrder>& lhs, const TTerm<UCoefficientType>& rhs);
+
+template<typename UCoefficientType, typename UOrder>
+bool IsReducibleBy(
+    const TPolynomial<UCoefficientType, UOrder>& lhs,
+    const TPolynomial<UCoefficientType, UOrder>& rhs);
 
 }
 

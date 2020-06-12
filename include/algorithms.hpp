@@ -7,7 +7,7 @@ namespace NLibPoly {
 
 template<typename UCoefficientType, typename UOrder>
 TPolynomial<UCoefficientType, UOrder>
-Reduce(TPolynomial<UCoefficientType, UOrder> p1, TPolynomial<UCoefficientType, UOrder> p2);
+Reduce(TPolynomial<UCoefficientType, UOrder> lhss, TPolynomial<UCoefficientType, UOrder> rhs);
 
 }
 

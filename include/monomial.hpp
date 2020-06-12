@@ -32,7 +32,6 @@ public:
     friend bool operator!=(const TMonomial& lhs, const TMonomial& rhs);
 
     friend TMonomial Lcm(const TMonomial& lhs, const TMonomial& rhs);
-    friend bool IsDivisibleBy(const TMonomial& lhs, const TMonomial& rhs);
 
     friend std::ostream& operator<<(std::ostream& out, const TMonomial& monomial);
 
@@ -53,11 +52,13 @@ private:
     TContainer Variables;
 };
 
-TMonomial Lcm(const TMonomial& a, const TMonomial& b);
 TMonomial operator*(const TMonomial& lhs, const TMonomial& m2);
 TMonomial operator/(const TMonomial& lhs, const TMonomial& m2);
 bool operator==(const TMonomial& lhs, const TMonomial& m2);
 bool operator!=(const TMonomial& lhs, const TMonomial& m2);
+
+TMonomial Lcm(const TMonomial& a, const TMonomial& b);
+bool IsDivisibleBy(const TMonomial& lhs, const TMonomial& rhs);
 
 }
 

@@ -15,7 +15,7 @@ public:
     TLibPolyException(const char* error) : runtime_error(error) {}
 };
 
-void Halt(const char* error);
+[[noreturn]] void Halt(const char* error);
 
 }
 
