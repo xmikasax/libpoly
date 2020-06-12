@@ -301,4 +301,21 @@ void TestAlgorithms()
         assert(Reduce(a, b) == d);
         assert(Reduce(a, c) == e);
     }
+
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c{ { { 5, 6 } }, { { 7, 8 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> d;
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> e{ { 3, { { 1, 2 }, { 3, 4 }, { 7, 8 } } },
+                                                            { { { 3, 4 }, { 5, 12 } } } };
+
+        assert(SPolynomial(a, b) == d);
+        assert(SPolynomial(a, c) == e);
+    }
 }
