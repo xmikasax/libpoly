@@ -1,10 +1,21 @@
 language: cpp
+
 compiler:
   - gcc
   - clang
+
 os:
-  - linux
   - osx
+
+jobs:
+  include:
+    - os: linux
+      dist: bionic
+      compiler: gcc
+
+      - os: linux
+        dist: bionic
+        compiler: clang
 
 script:
   - ./build.sh
