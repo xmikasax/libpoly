@@ -1,6 +1,7 @@
 #ifndef INCLUDE_POLYNOMIAL_HPP
 #define INCLUDE_POLYNOMIAL_HPP
 
+#include <algorithm>
 #include <iostream>
 #include <set>
 
@@ -41,6 +42,12 @@ public:
     friend bool operator!=(const TPolynomial& lhs, const TPolynomial& rhs)
     {
         return !(lhs == rhs);
+    }
+
+    friend bool operator<(const TPolynomial& lhs, const TPolynomial& rhs)
+    {
+        return std::lexicographical_compare(
+            lhs.Terms.begin(), lhs.Terms.end(), rhs.Terms.begin(), rhs.Terms.end(), UOrder());
     }
 
     const TTerm<UCoefficientType>& Leader() const;
@@ -91,6 +98,10 @@ operator-(const TTerm<UCoefficientType>& lhs, const TPolynomial<UCoefficientType
 template<typename UCoefficientType, typename UOrder>
 TPolynomial<UCoefficientType, UOrder>
 operator*(const TPolynomial<UCoefficientType, UOrder>& lhs, const TTerm<UCoefficientType>& rhs);
+
+template<typename UCoefficientType, typename UOrder>
+std::ostream&
+operator<<(std::ostream& out, const TPolynomial<UCoefficientType, UOrder>& polynomial);
 
 template<typename UCoefficientType, typename UOrder>
 bool IsReducibleBy(

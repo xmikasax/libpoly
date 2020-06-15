@@ -5,6 +5,7 @@ void TestMonomial();
 void TestTerm();
 void TestOrder();
 void TestPolynomial();
+void TestPolynomialSet();
 void TestAlgorithms();
 void TestAll();
 

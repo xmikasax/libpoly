@@ -30,4 +30,20 @@ TPolynomial<UCoefficientType, UOrder> SPolynomial(
     return lhs * (lcm / lhs.Leader()) - rhs * (lcm / rhs.Leader());
 }
 
+template<typename UCoefficientType, typename UOrder>
+TPolynomialSet<UCoefficientType, UOrder>
+Buchberger(TPolynomialSet<UCoefficientType, UOrder> polynomial_set)
+{
+    std::vector<TPolynomial<UCoefficientType, UOrder>> current_set(
+        polynomial_set.begin(), polynomial_set.end());
+
+    TPolynomialSet<UCoefficientType, UOrder> res;
+
+    for (auto& polynomial : current_set) {
+        res.Insert(std::move(polynomial));
+    }
+
+    return res;
+}
+
 }

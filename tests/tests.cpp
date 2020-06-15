@@ -8,6 +8,7 @@
 #include "monomial.hpp"
 #include "order.hpp"
 #include "polynomial.hpp"
+#include "polynomial_set.hpp"
 #include "term.hpp"
 #include "utils.hpp"
 
@@ -17,6 +18,7 @@ void TestAll()
     TestTerm();
     TestOrder();
     TestPolynomial();
+    TestPolynomialSet();
     TestAlgorithms();
 }
 
@@ -281,6 +283,40 @@ void TestPolynomial()
     std::cerr << "Polynomial tests OK!" << std::endl;
 }
 
+void TestPolynomialSet()
+{
+    using namespace NLibPoly;
+
+    {
+        TPolynomialSet<TIntegerMod<5>, TLexicographicOrder> a;
+
+        assert(a.Size() == 0);
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
+
+        a.Insert(b);
+
+        assert(a.Size() == 1);
+
+        a.Insert(b);
+
+        assert(a.Size() == 1);
+
+        a.Erase(b);
+
+        assert(a.Size() == 0);
+
+        a.Erase(b);
+
+        assert(a.Size() == 0);
+    }
+
+    std::cerr << "Polynomial Set tests OK!" << std::endl;
+}
+
 void TestAlgorithms()
 {
     using namespace NLibPoly;
@@ -318,4 +354,6 @@ void TestAlgorithms()
         assert(SPolynomial(a, b) == d);
         assert(SPolynomial(a, c) == e);
     }
+
+    std::cerr << "Algorithms tests OK!" << std::endl;
 }

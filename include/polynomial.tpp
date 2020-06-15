@@ -2,6 +2,7 @@
 #define INCLUDE_POLYNOMIAL_TPP
 
 #include "polynomial.hpp"
+#include "term.hpp"
 
 #include <iostream>
 
@@ -218,77 +219,77 @@ TPolynomial<UCoefficientType, UOrder>::begin()
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::end()
+TPolynomial<UCoefficientType, UOrder>::end()
 {
     return Terms.end();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::begin() const
+TPolynomial<UCoefficientType, UOrder>::begin() const
 {
     return Terms.begin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::end() const
+TPolynomial<UCoefficientType, UOrder>::end() const
 {
     return Terms.end();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::rbegin()
+TPolynomial<UCoefficientType, UOrder>::rbegin()
 {
     return Terms.rbegin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::rend()
+TPolynomial<UCoefficientType, UOrder>::rend()
 {
     return Terms.rend();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::rbegin() const
+TPolynomial<UCoefficientType, UOrder>::rbegin() const
 {
     return Terms.rbegin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::rend() const
+TPolynomial<UCoefficientType, UOrder>::rend() const
 {
     return Terms.rend();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::cbegin() const
+TPolynomial<UCoefficientType, UOrder>::cbegin() const
 {
     return Terms.cbegin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::cend() const
+TPolynomial<UCoefficientType, UOrder>::cend() const
 {
     return Terms.cend();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::crbegin() const
+TPolynomial<UCoefficientType, UOrder>::crbegin() const
 {
     return Terms.crbegin();
 }
 
 template<typename UCoefficientType, typename UOrder>
 typename TPolynomial<UCoefficientType, UOrder>::TConstReverseIterator
-TPolynomial<UCoefficientType, UOrder>::TPolynomial::crend() const
+TPolynomial<UCoefficientType, UOrder>::crend() const
 {
     return Terms.crend();
 }

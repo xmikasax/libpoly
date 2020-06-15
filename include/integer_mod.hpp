@@ -5,9 +5,11 @@
 
 namespace NLibPoly {
 
-// TODO: enable if UModulo > 1
 template<size_t UModulo>
 class TIntegerMod {
+
+    static_assert(UModulo > 1);
+
 public:
     using TUnsignedInteger = size_t;
 

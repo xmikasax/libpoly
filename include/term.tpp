@@ -5,6 +5,8 @@
 
 #include <iostream>
 
+#include "monomial.hpp"
+
 namespace NLibPoly {
 
 template<typename UCoefficientType>
@@ -125,7 +127,8 @@ TTerm<UCoefficientType> Lcm(const TTerm<UCoefficientType>& lhs, const TTerm<UCoe
 template<typename UCoefficientType>
 bool IsDivisibleBy(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
 {
-    return rhs.GetCoefficient() != UCoefficientType(0) &&  IsDivisibleBy(lhs.GetMonomial(), rhs.GetMonomial());
+    return rhs.GetCoefficient() != UCoefficientType(0)
+           && IsDivisibleBy(lhs.GetMonomial(), rhs.GetMonomial());
 }
 
 template<typename UCoefficientType>
