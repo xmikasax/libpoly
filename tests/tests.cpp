@@ -355,5 +355,46 @@ void TestAlgorithms()
         assert(SPolynomial(a, c) == e);
     }
 
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { { 5, 6 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c{ { 3, { { 1, 2 }, { 3, 4 }, { 7, 8 } } },
+                                                            { { { 3, 4 }, { 5, 12 } } } };
+
+        TPolynomialSet<TIntegerMod<5>, TLexicographicOrder> d;
+
+        d.Insert(a);
+        d.Insert(b);
+
+        assert(Reduce(c, d).Size() == 0);
+    }
+
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { { 1, 1 }, { 2, 1 } },
+                                                            { 4, { 4, 1 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { { 1, 1 }, { 3, 1 } },
+                                                            { 4, { 4, 1 } } };
+
+        TPolynomialSet<TIntegerMod<5>, TLexicographicOrder> c;
+
+        c.Insert(a);
+        c.Insert(b);
+
+        auto d = Buchberger(c);
+
+        d.Erase(a);
+        d.Erase(b);
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> e{ { { 2, 1 }, { 4, 1 } },
+                                                            { 4, { { 3, 1 }, { 4, 1 } } } };
+
+        assert(d.Size() == 1);
+        assert(*d.begin() == e);
+    }
+
     std::cerr << "Algorithms tests OK!" << std::endl;
 }
