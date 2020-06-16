@@ -2,16 +2,18 @@
 
 import os
 import re
+import subprocess
 
 with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data.txt"), "r") as f:
     data = f.read()
 
 segments = re.findall(r"# ([a-z0-9 ]+)\nsys := \[([a-z0-9+\-*^, \n]+)", data)
 
+print("Name|Time (seconds)")
+print(":-:|:-:")
+
 cnt = 0
 for name, data in segments:
-    if name != 'cyclic5':
-        continue
     data = data.replace('\n', '').replace(' ', '')
     polynomials = data.split(',')
     for i in range(len(polynomials)):
@@ -40,6 +42,15 @@ for name, data in segments:
                     variable_index = variable.split('^')[0][1:]
                     power = variable.split('^')[1]
                 test_data += f"{variable_index} {power}\n"
-    print(test_data)
 
-    break
+    program = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, "build", "bench")
+
+    process = subprocess.Popen(
+        [program],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+
+    outs, errs = process.communicate(input=test_data.encode())
+    print(f"{name}|{outs.decode().strip()}")

@@ -1,3 +1,4 @@
+#include <chrono>
 #include <iostream>
 
 #include "algorithm.hpp"
@@ -6,6 +7,22 @@
 #include "order.hpp"
 #include "polynomial.hpp"
 #include "polynomial_set.hpp"
+
+class TTimer {
+private:
+    std::chrono::high_resolution_clock::time_point Timer;
+
+public:
+    TTimer() : Timer(std::chrono::high_resolution_clock::now()) {}
+
+    double GetDuration() const
+    {
+        std::chrono::high_resolution_clock::time_point current_time =
+            std::chrono::high_resolution_clock::now();
+        return std::chrono::duration_cast<std::chrono::duration<double>>(current_time - Timer)
+            .count();
+    }
+};
 
 constexpr size_t P = 127;
 
@@ -53,7 +70,7 @@ int main()
         set.Insert(polynomial);
     }
 
+    TTimer timer;
     auto res = AutoReduce(Buchberger(set));
-    std::cout << res << "\n\n";
-    std::cout << res.Size() << "\n";
+    std::cout << timer.GetDuration() << "\n";
 }
