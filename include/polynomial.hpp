@@ -23,10 +23,6 @@ public:
     TPolynomial(std::initializer_list<TTerm<UCoefficientType>> init_list);
 
     size_t Size() const;
-    size_t size() const
-    {
-        return Size();
-    }
 
     TPolynomial& operator+=(const TPolynomial& other);
     TPolynomial& operator+=(const TTerm<UCoefficientType>& other);
@@ -47,7 +43,7 @@ public:
     friend bool operator<(const TPolynomial& lhs, const TPolynomial& rhs)
     {
         return std::lexicographical_compare(
-            lhs.Terms.begin(), lhs.Terms.end(), rhs.Terms.begin(), rhs.Terms.end(), UOrder());
+            lhs.Terms.rbegin(), lhs.Terms.rend(), rhs.Terms.rbegin(), rhs.Terms.rend(), UOrder());
     }
 
     const TTerm<UCoefficientType>& Leader() const;

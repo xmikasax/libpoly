@@ -28,19 +28,19 @@ template<typename UCoefficientType, typename UOrder>
 std::ostream&
 operator<<(std::ostream& out, const TPolynomialSet<UCoefficientType, UOrder>& polynomial_set)
 {
-    out << "[";
+    out << "{\n";
 
     bool first = true;
     for (const auto& polynomial : polynomial_set) {
         if (!first) {
-            out << ", ";
+            out << ",\n";
         } else {
             first = false;
         }
         out << polynomial;
     }
 
-    out << "]";
+    out << "\n}";
 
     return out;
 }

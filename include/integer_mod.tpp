@@ -7,24 +7,25 @@
 
 namespace NLibPoly {
 
-template<size_t UModulo>
-TIntegerMod<UModulo>::TIntegerMod(TUnsignedInteger value) : Value(value % UModulo)
+template<long long UModulo>
+TIntegerMod<UModulo>::TIntegerMod(TInnerInteger value)
+        : Value((value % UModulo + UModulo) % UModulo)
 {}
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> TIntegerMod<UModulo>::operator-() const
 {
     return TIntegerMod((-Value + UModulo) % UModulo);
 }
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator+=(const TIntegerMod& other)
 {
     Value = (Value + other.Value) % UModulo;
     return *this;
 }
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> operator+(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs)
 {
     TIntegerMod integer_mod(lhs);
@@ -32,14 +33,14 @@ TIntegerMod<UModulo> operator+(const TIntegerMod<UModulo>& lhs, const TIntegerMo
     return integer_mod;
 }
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator-=(const TIntegerMod& other)
 {
     Value = ((Value - other.Value) % UModulo + UModulo) % UModulo;
     return *this;
 }
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> operator-(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs)
 {
     TIntegerMod integer_mod(lhs);
@@ -47,14 +48,14 @@ TIntegerMod<UModulo> operator-(const TIntegerMod<UModulo>& lhs, const TIntegerMo
     return integer_mod;
 }
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator*=(const TIntegerMod& other)
 {
     Value = (Value * other.Value) % UModulo;
     return *this;
 }
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> operator*(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs)
 {
     TIntegerMod integer_mod(lhs);
@@ -63,7 +64,7 @@ TIntegerMod<UModulo> operator*(const TIntegerMod<UModulo>& lhs, const TIntegerMo
 }
 
 namespace {
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> Power(TIntegerMod<UModulo> value, size_t power)
 {
     if (power == 0) {
@@ -77,10 +78,10 @@ TIntegerMod<UModulo> Power(TIntegerMod<UModulo> value, size_t power)
 }
 }
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator/=(const TIntegerMod& other)
 {
-    if (other.Value == TUnsignedInteger(0)) {
+    if (other.Value == TInnerInteger(0)) {
         NUtils::Halt("Division by zero");
     }
 
@@ -88,7 +89,7 @@ TIntegerMod<UModulo>& TIntegerMod<UModulo>::operator/=(const TIntegerMod& other)
     return *this;
 }
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> operator/(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs)
 {
     TIntegerMod integer_mod(lhs);
@@ -96,7 +97,7 @@ TIntegerMod<UModulo> operator/(const TIntegerMod<UModulo>& lhs, const TIntegerMo
     return integer_mod;
 }
 
-template<size_t UOutputModulo>
+template<long long UOutputModulo>
 std::ostream& operator<<(std::ostream& out, const TIntegerMod<UOutputModulo>& im)
 {
     out << im.Value;

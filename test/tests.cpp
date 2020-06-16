@@ -3,7 +3,7 @@
 #include <cassert>
 #include <iostream>
 
-#include "algorithms.hpp"
+#include "algorithm.hpp"
 #include "integer_mod.hpp"
 #include "monomial.hpp"
 #include "order.hpp"
@@ -235,7 +235,6 @@ void TestPolynomial()
     {
         TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { { 1, 2 } }, { { 3, 4 } } };
 
-        assert(a.size() == 2);
         assert(a.Size() == 2);
     }
 
@@ -394,6 +393,24 @@ void TestAlgorithms()
 
         assert(d.Size() == 1);
         assert(*d.begin() == e);
+    }
+
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { { 1, 1 }, { 3, 1 } },
+                                                            { 4, { 4, 1 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { { 1, 1 }, { 3, 2 } },
+                                                            { 4, { { 3, 1 }, { 4, 1 } } } };
+
+        TPolynomialSet<TIntegerMod<5>, TLexicographicOrder> c;
+
+        c.Insert(a);
+        c.Insert(b);
+
+        auto d = AutoReduce(Buchberger(c));
+
+        assert(d.Size() == 1);
+        assert(*d.begin() == a);
     }
 
     std::cerr << "Algorithms tests OK!" << std::endl;

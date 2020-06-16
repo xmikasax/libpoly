@@ -30,9 +30,10 @@ template<typename UCoefficientType, typename UOrder>
 TPolynomial<UCoefficientType, UOrder>&
 TPolynomial<UCoefficientType, UOrder>::operator+=(const TPolynomial& other)
 {
+
     for (const auto& term : other) {
         auto term_iterator = Terms.lower_bound(term);
-        if (UOrder::Compare(*term_iterator, term)) {
+        if (term_iterator == Terms.end() || UOrder::Compare(*term_iterator, term)) {
             Terms.insert(term_iterator, term);
         } else {
             auto value = std::move(*term_iterator);
@@ -90,7 +91,7 @@ TPolynomial<UCoefficientType, UOrder>::operator-=(const TPolynomial& other)
 {
     for (const auto& term : other) {
         auto term_iterator = Terms.lower_bound(term);
-        if (UOrder::Compare(*term_iterator, term)) {
+        if (term_iterator == Terms.end() || UOrder::Compare(*term_iterator, term)) {
             Terms.insert(term_iterator, { -term.GetCoefficient(), term.GetMonomial() });
         } else {
             auto value = std::move(*term_iterator);

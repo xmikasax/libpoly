@@ -118,6 +118,11 @@ int TDegreeOrder::CompareInternal(const TMonomial& lhs, const TMonomial& rhs)
     }
 }
 
+int TReverseDegreeOrder::CompareInternal(const TMonomial& lhs, const TMonomial& rhs)
+{
+    return TDegreeOrder::Compare(lhs, rhs) * -1;
+}
+
 template<typename UOrder, typename... UOrders>
 int TCombineOrder<UOrder, UOrders...>::CompareInternal(const TMonomial& lhs, const TMonomial& rhs)
 {

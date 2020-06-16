@@ -5,17 +5,17 @@
 
 namespace NLibPoly {
 
-template<size_t UModulo>
+template<long long UModulo>
 class TIntegerMod {
 
     static_assert(UModulo > 1);
 
 public:
-    using TUnsignedInteger = size_t;
+    using TInnerInteger = long long;
 
 public:
     TIntegerMod() = default;
-    TIntegerMod(TUnsignedInteger value);
+    TIntegerMod(TInnerInteger value);
 
     TIntegerMod operator-() const;
     TIntegerMod& operator+=(const TIntegerMod& other);
@@ -33,23 +33,23 @@ public:
         return !(lhs == rhs);
     }
 
-    template<size_t UOutputModulo>
+    template<long long UOutputModulo>
     friend std::ostream& operator<<(std::ostream& out, const TIntegerMod<UOutputModulo>& im);
 
 private:
-    TUnsignedInteger Value = TUnsignedInteger(0);
+    TInnerInteger Value = TInnerInteger(0);
 };
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> operator-(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs);
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> operator+(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs);
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> operator*(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs);
 
-template<size_t UModulo>
+template<long long UModulo>
 TIntegerMod<UModulo> operator/(const TIntegerMod<UModulo>& lhs, const TIntegerMod<UModulo>& rhs);
 
 }

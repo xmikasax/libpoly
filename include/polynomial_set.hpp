@@ -18,10 +18,6 @@ public:
     TPolynomialSet() = default;
 
     size_t Size() const;
-    size_t size() const
-    {
-        return Size();
-    }
 
     template<class UPolynomial>
     void Insert(UPolynomial&& polynomial);

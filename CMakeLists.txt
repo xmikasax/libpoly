@@ -12,10 +12,17 @@ add_library(poly INTERFACE)
 
 target_include_directories(poly INTERFACE include)
 
-add_executable(test tests/main.cpp tests/tests.cpp)
+add_executable(test test/main.cpp test/tests.cpp)
 target_compile_options(test
     PRIVATE -Wall -Wextra -Werror -pedantic)
 
 target_include_directories(test PRIVATE tests)
 
 target_link_libraries(test PRIVATE poly)
+
+
+add_executable(bench bench/main.cpp)
+target_compile_options(bench
+    PRIVATE -Wall -Wextra -Werror -pedantic)
+
+target_link_libraries(bench PRIVATE poly)

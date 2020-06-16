@@ -1,4 +1,4 @@
-#include "algorithms.hpp"
+#include "algorithm.hpp"
 
 #include <vector>
 
@@ -65,11 +65,6 @@ template<typename UCoefficientType, typename UOrder>
 TPolynomialSet<UCoefficientType, UOrder>
 Buchberger(TPolynomialSet<UCoefficientType, UOrder> polynomial_set)
 {
-    TPolynomialSet<UCoefficientType, UOrder> current_set;
-
-    for (const auto& polynomial : polynomial_set) {
-        current_set.Insert(polynomial);
-    }
 
     std::vector<TPolynomial<UCoefficientType, UOrder>> current_set_vector(
         polynomial_set.begin(), polynomial_set.end());
@@ -77,16 +72,60 @@ Buchberger(TPolynomialSet<UCoefficientType, UOrder> polynomial_set)
     for (size_t i = 0; i < current_set_vector.size(); ++i) {
         for (size_t j = 0; j < i; ++j) {
             auto spolynomial = SPolynomial(current_set_vector[i], current_set_vector[j]);
-            auto remainder   = Reduce(spolynomial, current_set);
+            auto remainder   = Reduce(spolynomial, polynomial_set);
+
+            // std::cout << "(" << current_set_vector[i] << ", " << current_set_vector[j] << ") => "
+            //           << spolynomial << " => " << remainder << "\n\n";
 
             if (remainder.Size() > 0) {
-                current_set.Insert(remainder);
+                polynomial_set.Insert(remainder);
                 current_set_vector.push_back(std::move(remainder));
             }
         }
     }
 
-    return current_set;
+    return polynomial_set;
+}
+
+template<typename UCoefficientType, typename UOrder>
+TPolynomialSet<UCoefficientType, UOrder>
+AutoReduce(TPolynomialSet<UCoefficientType, UOrder> polynomial_set)
+{
+    auto res = polynomial_set;
+
+    bool reducing = true;
+
+    while (reducing) {
+        reducing = false;
+
+        for (const auto& polynomial : polynomial_set) {
+            res.Erase(polynomial);
+
+            auto reduced = Reduce(polynomial, res);
+
+            if (reduced.Size() > 0) {
+                res.Insert(reduced);
+
+                if (reduced != polynomial) {
+                    reducing = true;
+                }
+            }
+        }
+
+        polynomial_set = res;
+    }
+
+    for (const auto& polynomial : polynomial_set) {
+        res.Erase(polynomial);
+
+        const auto& leader = polynomial.Leader();
+
+        res.Insert(
+            polynomial
+            * TTerm<UCoefficientType>(UCoefficientType(1) / leader.GetCoefficient(), {}));
+    }
+
+    return res;
 }
 
 }

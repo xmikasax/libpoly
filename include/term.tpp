@@ -138,10 +138,14 @@ std::ostream& operator<<(std::ostream& out, const TTerm<UCoefficientType>& term)
     if (term.GetCoefficient() == UCoefficientType(0)) {
         out << "0";
     } else {
-        if (term.GetCoefficient() == UCoefficientType(1)) {
+        if (term.GetCoefficient() == UCoefficientType(1)
+            && term.GetMonomial().begin() != term.GetMonomial().end())
+        {
             out << term.GetMonomial();
+        } else if (term.GetMonomial().begin() != term.GetMonomial().end()) {
+            out << term.GetCoefficient() << "*" << term.GetMonomial();
         } else {
-            out << term.GetCoefficient() << " " << term.GetMonomial();
+            out << term.GetCoefficient();
         }
     }
 

@@ -39,6 +39,13 @@ private:
     static int CompareInternal(const TMonomial& lhs, const TMonomial& rhs);
 };
 
+class TReverseDegreeOrder : public TOrder<TReverseDegreeOrder> {
+    friend class TOrder<TReverseDegreeOrder>;
+
+private:
+    static int CompareInternal(const TMonomial& lhs, const TMonomial& rhs);
+};
+
 template<typename UOrder, typename... UOrders>
 class TCombineOrder : public TOrder<TCombineOrder<UOrder, UOrders...>> {
     friend class TOrder<TCombineOrder<UOrder, UOrders...>>;
@@ -57,6 +64,8 @@ private:
 
 using TGradedLexicographicOrder        = TCombineOrder<TDegreeOrder, TLexicographicOrder>;
 using TGradedReverseLexicographicOrder = TCombineOrder<TDegreeOrder, TReverseLexicographicOrder>;
+using TReverseGradedReverseLexicographicOrder =
+    TCombineOrder<TReverseDegreeOrder, TReverseLexicographicOrder>;
 
 }
 

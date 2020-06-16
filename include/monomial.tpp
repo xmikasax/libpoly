@@ -109,11 +109,15 @@ std::ostream& operator<<(std::ostream& out, const TMonomial& monomial)
         bool first = true;
         for (const auto& variable : monomial) {
             if (!first) {
-                out << " ";
+                out << "*";
             } else {
                 first = false;
             }
-            out << "x_{" << variable.first << "}^{" << variable.second << "}";
+            if (variable.second > 1) {
+                out << "x" << variable.first << "^" << variable.second;
+            } else {
+                out << "x" << variable.first;
+            }
         }
     }
 

@@ -20,8 +20,12 @@ template<typename UCoefficientType, typename UOrder>
 TPolynomialSet<UCoefficientType, UOrder>
 Buchberger(TPolynomialSet<UCoefficientType, UOrder> polynomial_set);
 
+template<typename UCoefficientType, typename UOrder>
+TPolynomialSet<UCoefficientType, UOrder>
+AutoReduce(TPolynomialSet<UCoefficientType, UOrder> polynomial_set);
+
 }
 
-#include "algorithms.tpp"
+#include "algorithm.tpp"
 
 #endif // INCLUDE_ALGORITHMS_HPP
