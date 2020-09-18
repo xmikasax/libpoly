@@ -1,75 +1,288 @@
 #include "tests.hpp"
 
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
+#include "algorithms.hpp"
+#include "integer_mod.hpp"
 #include "monomial.hpp"
+#include "order.hpp"
+#include "polynomial.hpp"
 #include "term.hpp"
 #include "utils.hpp"
 
-void TestAll() {
+void TestAll()
+{
     TestMonomial();
     TestTerm();
+    TestOrder();
+    TestPolynomial();
+    TestAlgorithms();
 }
 
-void TestMonomial() {
+void TestMonomial()
+{
     using namespace NLibPoly;
 
-    TMonomial a;
-    assert(a.GetDegree(0) == 0);
-    a.SetDegree(2, 2);
-    assert(a.GetDegree(2) == 2);
+    {
+        TMonomial a;
+        assert(a.GetDegree(0) == 0);
+        a.SetDegree(2, 2);
+        assert(a.GetDegree(2) == 2);
+    }
 
-    TMonomial b{{2, 1}};
-    TMonomial c = a / b;
-    assert(c.GetDegree(0) == 0);
-    assert(c.GetDegree(2) == 1);
+    {
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 } };
+        TMonomial c = a / b;
+        assert(c.GetDegree(0) == 0);
+        assert(c.GetDegree(2) == 1);
+    }
 
-    TMonomial d = b * a;
-    assert(d.GetDegree(2) == 3);
+    {
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 } };
+        TMonomial c = b * a;
+        assert(c.GetDegree(2) == 3);
+    }
 
-    b.SetDegree(3, 1);
-    TMonomial e = Lcm(b, d);
+    {
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 }, { 3, 1 } };
+        TMonomial c = Lcm(a, b);
 
-    assert(e.GetDegree(2) == 3);
-    assert(e.GetDegree(3) == 1);
+        assert(c.GetDegree(2) == 2);
+        assert(c.GetDegree(3) == 1);
+    }
 
-    try {
-        TMonomial bad = b / a;
-        assert(false);
-    } catch (NUtils::TLibPolyException& e) {}
+    {
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 }, { 3, 1 } };
+        try {
+            TMonomial bad = b / a;
+            assert(false);
+        } catch (NUtils::TLibPolyException& e) {
+        }
+    }
 
-    assert(c * c == a);
-    assert(c != a);
+    {
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 } };
+        assert(b * b == a);
+        assert(b != a);
+    }
+
+    {
+        TMonomial a{ { 2, 2 } };
+        TMonomial b{ { 2, 1 } };
+        TMonomial c{ { 2, 1 }, { 3, 1 } };
+
+        assert(IsDivisibleBy(a, b));
+        assert(IsDivisibleBy(c, b));
+        assert(!IsDivisibleBy(b, c));
+    }
 
     std::cerr << "Monomial tests OK!" << std::endl;
 }
 
-void TestTerm() {
+void TestTerm()
+{
     using namespace NLibPoly;
 
-    TTerm<size_t> a;
-    assert(a.GetDegree(0) == 0);
-    a.SetDegree(2, 1);
-    a.SetCoefficient(2);
-    assert(a.GetDegree(2) == 1);
-    assert(a.GetCoefficient() == 2);
+    {
+        TTerm<TIntegerMod<5>> a;
+        assert(a.GetDegree(0) == 0);
+        a.SetDegree(2, 1);
+        a.SetCoefficient(2);
+        assert(a.GetDegree(2) == 1);
+        assert(a.GetCoefficient() == 2);
+    }
 
-    TTerm<size_t> b{{2, 1}};
-    TTerm<size_t> c = a / b;
-    assert(c.GetCoefficient() == 2);
-    assert(c.GetDegree(2) == 0);
+    {
+        TTerm<TIntegerMod<5>> a{ 2, { { 2, 1 } } };
+        TTerm<TIntegerMod<5>> b{ 2, { 2, 1 } };
+        TTerm<TIntegerMod<5>> c = a / b;
+        assert(c.GetCoefficient() == 1);
+        assert(c.GetDegree(2) == 0);
+    }
 
-    TTerm<size_t> d = b * a;
-    assert(d.GetDegree(2) == 2);
-    assert(d.GetCoefficient() == 2);
+    {
+        TTerm<TIntegerMod<5>> a{ 2, { { 2, 1 } } };
+        TTerm<TIntegerMod<5>> b{ { 2, 1 } };
+        TTerm<TIntegerMod<5>> d = b * a;
+        assert(d.GetDegree(2) == 2);
+        assert(d.GetCoefficient() == 2);
+    }
 
-    b.SetDegree(3, 1);
-    TTerm<size_t> e = Lcm(b, d);
+    {
+        TTerm<TIntegerMod<5>> a{ 2, { { 2, 2 } } };
+        TTerm<TIntegerMod<5>> b{ { 2, 1 } };
+        b.SetDegree(3, 1);
+        TTerm<TIntegerMod<5>> c = Lcm(a, b);
 
-    assert(e.GetDegree(2) == 2);
-    assert(e.GetDegree(3) == 1);
-    assert(e.GetCoefficient() == 2);
+        assert(c.GetDegree(2) == 2);
+        assert(c.GetDegree(3) == 1);
+        assert(c.GetCoefficient() == 2);
+    }
 
     std::cerr << "Term tests OK!" << std::endl;
+}
+
+void TestOrder()
+{
+    using namespace NLibPoly;
+
+    {
+        TMonomial a{ { 1, 1 }, { 2, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 1 } };
+
+        assert(!TLexicographicOrder()(a, b));
+        assert(TLexicographicOrder::Compare(a, b) == 0);
+    }
+
+    {
+        TMonomial a{ { 1, 1 }, { 2, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 2 } };
+
+        assert(TLexicographicOrder()(a, b));
+        assert(TLexicographicOrder::Compare(a, b) < 0);
+    }
+
+    {
+        TMonomial a{ { 1, 2 }, { 2, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 1 } };
+
+        assert(!TLexicographicOrder()(a, b));
+        assert(TLexicographicOrder::Compare(a, b) > 0);
+    }
+
+    {
+        TMonomial a{ { 1, 1 }, { 2, 2 } };
+        TMonomial b{ { 1, 2 }, { 2, 1 } };
+
+        assert(!TDegreeOrder()(a, b));
+    }
+
+    {
+        TMonomial a{ { 1, 1 }, { 2, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 2 } };
+
+        assert(TDegreeOrder()(a, b));
+    }
+
+    {
+        TMonomial a{ { 1, 1 }, { 2, 1 }, { 3, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 1 } };
+
+        assert(!TLexicographicOrder()(a, b));
+    }
+
+    {
+        TMonomial a{ { 1, 2 }, { 2, 1 }, { 3, 1 } };
+        TMonomial b{ { 1, 1 }, { 2, 4 } };
+        TMonomial c{ { 1, 1 }, { 2, 2 }, { 3, 1 } };
+
+        assert(TGradedLexicographicOrder::Compare(a, b) < 0);
+        assert(!TGradedLexicographicOrder()(b, c));
+    }
+
+    {
+        TMonomial a{ { 1, 0 }, { 2, 2 }, { 3, 1 } };
+        TMonomial b{ { 1, 0 }, { 2, 1 }, { 3, 2 } };
+        TMonomial c{ { 1, 1 }, { 2, 1 }, { 3, 2 } };
+
+        assert(TReverseLexicographicOrder::Compare(a, b) > 0);
+        assert(TReverseLexicographicOrder::Compare(b, c) > 0);
+    }
+
+    {
+        TMonomial a{ { 1, 2 } };
+        TMonomial b{ { 1, 1 }, { 2, 1 } };
+        TMonomial c{ { 2, 2 } };
+        TMonomial d{ { 1, 1 }, { 3, 1 } };
+        TMonomial e{ { 2, 1 }, { 3, 1 } };
+        TMonomial f{ { 3, 2 } };
+
+        assert(TGradedReverseLexicographicOrder::Compare(a, b) > 0);
+        assert(TGradedReverseLexicographicOrder::Compare(b, c) > 0);
+        assert(TGradedReverseLexicographicOrder::Compare(c, d) > 0);
+        assert(TGradedReverseLexicographicOrder::Compare(d, e) > 0);
+        assert(TGradedReverseLexicographicOrder::Compare(e, f) > 0);
+    }
+
+    std::cerr << "Order tests OK!" << std::endl;
+}
+
+void TestPolynomial()
+{
+    using namespace NLibPoly;
+
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { { 1, 2 }, { 3, 4 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { { 1, 2 }, { 3, 4 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c{ { 1, { { 2, 3 } } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> d{ { { 1, 2 }, { 3, 5 } } };
+
+        assert(a == b);
+        assert(b != d);
+    }
+
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { { 1, 2 } }, { { 3, 4 } } };
+
+        assert(a.size() == 2);
+        assert(a.Size() == 2);
+    }
+
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { { 3, 4 }, { 5, 6 } }, { { 7, 8 } } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c = a + b;
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> d{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { 2, { { 3, 4 }, { 5, 6 } } },
+                                                            { { 7, 8 } } };
+
+        assert(c == d);
+        assert(c - b == a);
+        assert(d - a == b);
+    }
+
+    {
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+                                                            { { 3, 4 }, { 5, 6 } } };
+
+        TTerm<TIntegerMod<5>> b{ { 3, 4 }, { 5, 6 } };
+
+        TPolynomial<TIntegerMod<5>, TLexicographicOrder> c{
+            { 2, { { 1, 2 }, { 3, 4 } } },
+        };
+
+        assert(a - b == c);
+        assert(a - b + b == a);
+    }
+
+    std::cerr << "Polynomial tests OK!" << std::endl;
+}
+
+void TestAlgorithms()
+{
+    using namespace NLibPoly;
+
+    {
+        // TPolynomial<TIntegerMod<5>, TLexicographicOrder> a{ { 2, { { 1, 2 }, { 3, 4 } } },
+        //                                                     { { 3, 4 }, { 5, 6 } } };
+
+        // TPolynomial<TIntegerMod<5>, TLexicographicOrder> b{ { 2, { { 1, 2 }, { 3, 4 } } },
+        //                                                     { { 3, 4 }, { 5, 6 } } };
+
+        // TPolynomial<TIntegerMod<5>, TLexicographicOrder> c;
+
+        // assert(Reduce(a, b) == c);
+    }
 }

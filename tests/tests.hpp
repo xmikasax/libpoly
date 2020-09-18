@@ -3,6 +3,9 @@
 
 void TestMonomial();
 void TestTerm();
+void TestOrder();
+void TestPolynomial();
+void TestAlgorithms();
 void TestAll();
 
 #endif // INCLUDE_TESTS_HPP

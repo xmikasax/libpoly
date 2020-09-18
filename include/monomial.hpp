@@ -2,15 +2,20 @@
 #define INCLUDE_MONOMIAL_HPP
 
 #include <cstdint>
+#include <iostream>
 #include <map>
-#include <utility>
 
 namespace NLibPoly {
 
 class TMonomial {
 public:
-    using TIndex = size_t;
-    using TDegree = size_t;
+    using TIndex                = size_t;
+    using TDegree               = size_t;
+    using TContainer            = std::map<TIndex, TDegree>;
+    using TIterator             = TContainer::iterator;
+    using TConstIterator        = TContainer::const_iterator;
+    using TReverseIterator      = TContainer::reverse_iterator;
+    using TConstReverseIterator = TContainer::const_reverse_iterator;
 
 public:
     TMonomial() = default;
@@ -20,26 +25,42 @@ public:
     TDegree GetDegree(TIndex index) const;
     void SetDegree(TIndex index, TDegree degree);
 
-    TMonomial &operator*=(const TMonomial &other);
-    friend TMonomial operator*(const TMonomial &m1, const TMonomial &m2);
-    TMonomial &operator/=(const TMonomial &other);
-    friend TMonomial operator/(const TMonomial &m1, const TMonomial &m2);
+    TMonomial& operator*=(const TMonomial& other);
+    TMonomial& operator/=(const TMonomial& other);
 
-    friend bool operator==(const TMonomial &m1, const TMonomial &m2);
-    friend bool operator!=(const TMonomial &m1, const TMonomial &m2);
+    friend bool operator==(const TMonomial& lhs, const TMonomial& rhs);
+    friend bool operator!=(const TMonomial& lhs, const TMonomial& rhs);
 
-    friend TMonomial Lcm(const TMonomial &a, const TMonomial &b);
+    friend TMonomial Lcm(const TMonomial& lhs, const TMonomial& rhs);
+    friend bool IsDivisibleBy(const TMonomial& lhs, const TMonomial& rhs);
+
+    friend std::ostream& operator<<(std::ostream& out, const TMonomial& monomial);
+
+    TIterator begin();
+    TIterator end();
+    TConstIterator begin() const;
+    TConstIterator end() const;
+    TReverseIterator rbegin();
+    TReverseIterator rend();
+    TConstReverseIterator rbegin() const;
+    TConstReverseIterator rend() const;
+    TConstIterator cbegin() const;
+    TConstIterator cend() const;
+    TConstReverseIterator crbegin() const;
+    TConstReverseIterator crend() const;
 
 private:
-    std::map<TIndex, TDegree> Variables;
+    TContainer Variables;
 };
 
-TMonomial Lcm(const TMonomial &a, const TMonomial &b);
-TMonomial operator*(const TMonomial &m1, const TMonomial &m2);
-TMonomial operator/(const TMonomial &m1, const TMonomial &m2);
-bool operator==(const TMonomial &m1, const TMonomial &m2);
-bool operator!=(const TMonomial &m1, const TMonomial &m2);
+TMonomial Lcm(const TMonomial& a, const TMonomial& b);
+TMonomial operator*(const TMonomial& lhs, const TMonomial& m2);
+TMonomial operator/(const TMonomial& lhs, const TMonomial& m2);
+bool operator==(const TMonomial& lhs, const TMonomial& m2);
+bool operator!=(const TMonomial& lhs, const TMonomial& m2);
 
 }
+
+#include "monomial.tpp"
 
 #endif // INCLUDE_MONOMIAL_HPP

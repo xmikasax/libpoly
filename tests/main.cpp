@@ -1,6 +1,7 @@
 #include "tests.hpp"
 
-int main() {
+int main()
+{
     TestAll();
     return 0;
 }

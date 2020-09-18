@@ -1,13 +1,15 @@
+#ifndef INCLUDE_TERM_TPP
+#define INCLUDE_TERM_TPP
+
 #include "term.hpp"
 
-#include <utility>
+#include <iostream>
 
 namespace NLibPoly {
 
-template <typename UCoefficientType>
+template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(UCoefficientType coefficient, TMonomial monomial)
-    : Coefficient(std::move(coefficient))
-    , Monomial(std::move(monomial))
+        : Coefficient(std::move(coefficient)), Monomial(std::move(monomial))
 {
     if (coefficient == UCoefficientType(0)) {
         Monomial = TMonomial();
@@ -16,11 +18,8 @@ TTerm<UCoefficientType>::TTerm(UCoefficientType coefficient, TMonomial monomial)
 
 template<typename UCoefficientType>
 TTerm<UCoefficientType>::TTerm(
-    UCoefficientType coefficient,
-    std::initializer_list<std::pair<TIndex, TDegree>> init_list)
-
-    : Coefficient(std::move(coefficient))
-    , Monomial(init_list)
+    UCoefficientType coefficient, std::initializer_list<std::pair<TIndex, TDegree>> init_list)
+        : Coefficient(std::move(coefficient)), Monomial(init_list)
 {
     if (coefficient == UCoefficientType(0)) {
         Monomial = TMonomial();
@@ -28,39 +27,46 @@ TTerm<UCoefficientType>::TTerm(
 }
 
 template<typename UCoefficientType>
-TTerm<UCoefficientType>::TTerm(
-    std::initializer_list<std::pair<TIndex, TDegree>> init_list)
-
-    : Coefficient(UCoefficientType(1))
-    , Monomial(init_list)
+TTerm<UCoefficientType>::TTerm(std::initializer_list<std::pair<TIndex, TDegree>> init_list)
+        : Coefficient(UCoefficientType(1)), Monomial(init_list)
 {}
 
-template <typename UCoefficientType>
-typename TTerm<UCoefficientType>::TConstCoefficientRef TTerm<UCoefficientType>::GetCoefficient() const {
+template<typename UCoefficientType>
+const TMonomial& TTerm<UCoefficientType>::GetMonomial() const
+{
+    return Monomial;
+}
+
+template<typename UCoefficientType>
+typename TTerm<UCoefficientType>::TConstCoefficientRef
+TTerm<UCoefficientType>::GetCoefficient() const
+{
     return Coefficient;
 }
 
-template <typename UCoefficientType>
-void TTerm<UCoefficientType>::SetCoefficient(UCoefficientType coefficient) {
+template<typename UCoefficientType>
+void TTerm<UCoefficientType>::SetCoefficient(UCoefficientType coefficient)
+{
     Coefficient = std::move(coefficient);
     if (Coefficient == UCoefficientType(0)) {
         Monomial = TMonomial();
     }
 }
 
-template <typename UCoefficientType>
-typename TTerm<UCoefficientType>::TDegree TTerm<UCoefficientType>::GetDegree(TIndex index) const {
+template<typename UCoefficientType>
+typename TTerm<UCoefficientType>::TDegree TTerm<UCoefficientType>::GetDegree(TIndex index) const
+{
     return Monomial.GetDegree(index);
 }
 
-template <typename UCoefficientType>
-void TTerm<UCoefficientType>::SetDegree(TIndex index, TDegree degree) {
+template<typename UCoefficientType>
+void TTerm<UCoefficientType>::SetDegree(TIndex index, TDegree degree)
+{
     Monomial.SetDegree(index, degree);
 }
 
-template <typename UCoefficientType>
-TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator*=(
-    const TTerm<UCoefficientType> &other)
+template<typename UCoefficientType>
+TTerm<UCoefficientType>& TTerm<UCoefficientType>::operator*=(const TTerm<UCoefficientType>& other)
 {
     Monomial *= other.Monomial;
     Coefficient *= other.Coefficient;
@@ -72,18 +78,17 @@ TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator*=(
     return *this;
 }
 
-template <typename UCoefficientType>
-TTerm<UCoefficientType> TTerm<UCoefficientType>::operator*(
-    const TTerm<UCoefficientType> &other) const
+template<typename UCoefficientType>
+TTerm<UCoefficientType>
+operator*(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
 {
-    TTerm<UCoefficientType> res(*this);
-    res *= other;
+    TTerm res(lhs);
+    res *= rhs;
     return res;
 }
 
-template <typename UCoefficientType>
-TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator/=(
-    const TTerm<UCoefficientType> &other)
+template<typename UCoefficientType>
+TTerm<UCoefficientType>& TTerm<UCoefficientType>::operator/=(const TTerm<UCoefficientType>& other)
 {
     Monomial /= other.Monomial;
     Coefficient /= other.Coefficient;
@@ -95,37 +100,51 @@ TTerm<UCoefficientType> &TTerm<UCoefficientType>::operator/=(
     return *this;
 }
 
-template <typename UCoefficientType>
-TTerm<UCoefficientType> TTerm<UCoefficientType>::operator/(
-    const TTerm<UCoefficientType> &other) const
+template<typename UCoefficientType>
+TTerm<UCoefficientType>
+operator/(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
 {
-    TTerm<UCoefficientType> res(*this);
-    res /= other;
+    TTerm res(lhs);
+    res /= rhs;
     return res;
 }
 
-template <typename UCoefficientType>
-bool TTerm<UCoefficientType>::operator==(
-    const TTerm<UCoefficientType> &other) const
+template<typename UCoefficientType>
+bool operator==(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
 {
-    return other.Monomial == Monomial;
+    return lhs.GetCoefficient() == rhs.GetCoefficient() && lhs.GetMonomial() == rhs.GetMonomial();
 }
 
-template <typename UCoefficientType>
-bool TTerm<UCoefficientType>::operator!=(
-    const TTerm<UCoefficientType> &other) const
-{
-    return !(other == (*this));
-}
-
-template <typename UCoefficientType>
-TTerm<UCoefficientType> Lcm(
-    const TTerm<UCoefficientType> &lhs,
-    const TTerm<UCoefficientType> &rhs)
+template<typename UCoefficientType>
+TTerm<UCoefficientType> Lcm(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
 {
     return TTerm<UCoefficientType>(
-        lhs.Coefficient * rhs.Coefficient,
-        Lcm(lhs.Monomial, rhs.Monomial));
+        lhs.GetCoefficient() * rhs.GetCoefficient(), Lcm(lhs.GetMonomial(), rhs.GetMonomial()));
 }
 
+template<typename UCoefficientType>
+bool IsDivisibleBy(const TTerm<UCoefficientType>& lhs, const TTerm<UCoefficientType>& rhs)
+{
+    return IsDivisibleBy(lhs.GetMonomial(), rhs.GetMonomial())
+           && rhs.GetCoefficient() != UCoefficientType(0);
 }
+
+template<typename UCoefficientType>
+std::ostream& operator<<(std::ostream& out, const TTerm<UCoefficientType>& term)
+{
+
+    if (term.Coefficient == UCoefficientType(0)) {
+        out << "0";
+    } else {
+        if (term.Coefficient == UCoefficientType(1)) {
+            out << term.GetMonomial();
+        } else {
+            out << term.GetCoefficient() << " " << term.GetMonomial();
+        }
+    }
+
+    return out;
+}
+}
+
+#endif // INCLUDE_TERM_TPP
