@@ -6,22 +6,23 @@ project(
     LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(
-    poly
-    SHARED
-    src/monomial.cpp
-    src/utils.cpp
-)
+add_library(poly INTERFACE)
 
-target_include_directories(poly PUBLIC include)
-target_include_directories(poly PRIVATE src)
+target_include_directories(poly INTERFACE include)
 
-target_compile_options(poly
-    PRIVATE -Wall -Wextra -Werror)
+add_executable(test test/main.cpp test/tests.cpp)
+target_compile_options(test
+    PRIVATE -Wall -Wextra -Werror -pedantic)
 
-add_executable(test tests/main.cpp tests/tests.cpp)
-target_include_directories(test PRIVATE tests/)
+target_include_directories(test PRIVATE tests)
 
 target_link_libraries(test PRIVATE poly)
+
+
+add_executable(bench bench/main.cpp)
+target_compile_options(bench
+    PRIVATE -Wall -Wextra -Werror -pedantic)
+
+target_link_libraries(bench PRIVATE poly)

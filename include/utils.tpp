@@ -1,15 +1,16 @@
 #include "utils.hpp"
 
 #include <cstdlib>
+#include <exception>
 #include <iostream>
 #include <string>
-#include <exception>
 
 namespace NLibPoly {
 
 namespace NUtils {
 
-void Halt(const char *error) {
+void Halt(const char* error)
+{
     throw TLibPolyException(error);
 }
 
