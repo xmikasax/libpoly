@@ -1,0 +1,8 @@
+language: cpp
+compiler: gcc
+dist: bionic
+os: linux
+
+script:
+  - ./build.sh
+  - ./test.sh
